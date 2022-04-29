@@ -8,9 +8,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "browser-sync start --server --port 8080 --ss docs --files docs/*"
+    "start": "web-dev-server -p 8080 -r docs -w"
   },
   "devDependencies": {
-    "browser-sync": "2.27.9"
+    "@web/dev-server": "0.1.31"
   }
 }
