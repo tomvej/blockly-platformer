@@ -6,9 +6,40 @@
 
     <script src="https://unpkg.com/blockly/blockly.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser-arcade-physics.min.js"></script>
+    <style>
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+        button {
+            font-size: 14pt;
+            padding: 10px 20px;
+        }
 
+        #game, #workspace {
+            width: 600px;
+            height: 500px;
+        }
+    </style>
 </head>
 <body>
-<h1>Blockly plošinovka</h1>
+    <div class="main">
+        <div class="controls">
+            <div id="game"></div>
+            <div id="workspace"></div>
+        </div>
+        <div class="controls">
+            <button type="button" id="start">Start</button>
+            <button type="button" id="reset">Reset</button>
+        </div>
+    </div>
 </body>
 </html>
