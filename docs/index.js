@@ -5,20 +5,9 @@ const WORLD_HEIGHT = 16;
 const DEFAULT_TILE = ' ';
 
 // 20x16
-const world = `                    
-                  
-                    
-                                        
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-====================`;
+const world = `
+====================
+`.split('\n').slice(1,-1).join('\n');
 
 function parseWorld(worldString) {
     const result = Array(WORLD_HEIGHT);
@@ -33,7 +22,7 @@ function parseWorld(worldString) {
     for (let y = 1; y <= WORLD_HEIGHT; y++) {
         const row = Array(WORLD_WIDTH);
         result[WORLD_HEIGHT-y] = row;
-        if (y >= lines.length) {
+        if (y > lines.length) {
             row.fill(DEFAULT_TILE);
         } else {
             const line = lines[lines.length - y];
