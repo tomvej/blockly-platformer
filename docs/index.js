@@ -9,14 +9,20 @@ document.getElementById('reset').addEventListener('click', () => {
 });
 
 const gameElement = document.getElementById('game')
-const width = gameElement.offsetWidth;
-const height = gameElement.offsetHeight;
+
+const width = 2560;
+const height = 2048;
 
 new Phaser.Game({
     type: Phaser.AUTO,
     parent: gameElement,
-    width,
-    height,
+    width: gameElement.offsetWidth,
+    height: gameElement.offsetHeight,
+    scale: {
+        width,
+        height,
+        mode: Phaser.Scale.FIT,
+    },
     scene: {
         preload,
         create,
@@ -30,4 +36,7 @@ function preload() {
 
 function create() {
     this.add.image(width/2, height/2, 'background').setDisplaySize(width, height);
+
+    this.add.image(width/2, height/2, 'sprites', 'planet');
+    this.add.image(width/2, height/2-128*1.5, 'sprites', 'alienGreen_front');
 }
