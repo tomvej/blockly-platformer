@@ -1,12 +1,14 @@
 import {toolbox} from './blocks.js';
 import {TILE_SIZE} from './constants.js';
 import {parseWorld, defaultWorld} from './world.js';
+import {setToOverwrite} from "./editorOverwrite.js";
 
 const worldEditor = document.getElementById('world-editor');
 worldEditor.value = defaultWorld;
 document.getElementById('regenerate').addEventListener('click', () => {
     game.game.scene.start('default');
 })
+setToOverwrite(worldEditor);
 
 const workspace = Blockly.inject('workspace', {toolbox: toolbox});
 document.getElementById('start').addEventListener('click', () => {
