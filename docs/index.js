@@ -26,6 +26,13 @@ new Phaser.Game({
     parent: gameElement,
     width: gameElement.offsetWidth,
     height: gameElement.offsetHeight,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: {y: 300},
+            debug: false,
+        }
+    },
     scale: {
         width,
         height,
@@ -37,6 +44,10 @@ new Phaser.Game({
     }
 });
 
+const game = {
+
+};
+
 function preload() {
     this.load.image('background', 'images/blue_grass.png');
     this.load.atlasXML('sprites', 'images/spritesheet_complete.png', 'images/spritesheet_complete.xml');
@@ -45,6 +56,9 @@ function preload() {
 function create() {
     this.add.image(width / 2, height / 2, 'background').setDisplaySize(width, height);
 
+    game.platforms = this.physics.add.staticGroup();
+    game.coins = this.physics.add.staticGroup();
+
     const entities = parseWorld(world);
     entities.forEach((entity) => {
         const x = entity.x * TILE_SIZE + TILE_SIZE / 2;
@@ -52,13 +66,13 @@ function create() {
         const y = y2 + TILE_SIZE / 2;
         switch (entity.type) {
             case 'platform':
-                this.add.image(x, y, 'sprites', `grass${entity.connection}`);
+                game.platforms.create(x, y, 'sprites', `grass${entity.connection}`);
                 break;
             case 'coin':
-                this.add.image(x, y, 'sprites', 'coinGold');
+                game.coins.create(x, y, 'sprites', 'coinGold');
                 break;
             case 'player':
-                this.add.image(x, y2, 'sprites', 'alienGreen_front');
+                game.player = this.physics.add.sprite(x, y2, 'sprites', 'alienGreen_front');
                 break;
             case 'exit':
                 this.add.image(x, y2, 'sprites', 'doorClosed');
@@ -67,4 +81,6 @@ function create() {
                 this.add.image(x, y, 'sprites', 'hudX');
         }
     });
+
+    this.physics.add.collider(game.platforms, game.player);
 }
