@@ -56,8 +56,21 @@ function preload() {
 function create() {
     this.add.image(width / 2, height / 2, 'background').setDisplaySize(width, height);
 
+    this.anims.create({
+        key: 'playerWalk',
+        frames: this.anims.generateFrameNames('sprites', {prefix: 'alienGreen_walk', start: 1, end: 2}),
+        frameRate: 15,
+        repeat: -1,
+    });
+    this.anims.create({
+        key: 'playerJump',
+        frames: [{key: 'sprites', frame: 'alienGreen_jump'}],
+        frameRate: 15,
+    });
+
     game.platforms = this.physics.add.staticGroup();
     game.coins = this.physics.add.staticGroup();
+    game.exits = this.physics.add.staticGroup();
 
     const entities = parseWorld(world);
     entities.forEach((entity) => {
@@ -75,7 +88,7 @@ function create() {
                 game.player = this.physics.add.sprite(x, y2, 'sprites', 'alienGreen_front');
                 break;
             case 'exit':
-                this.add.image(x, y2, 'sprites', 'doorClosed');
+                game.exits.create(x, y2, 'sprites', 'doorClosed');
                 break;
             case 'error':
                 this.add.image(x, y, 'sprites', 'hudX');
