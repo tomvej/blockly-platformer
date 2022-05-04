@@ -1,52 +1,12 @@
 import {toolbox} from './blocks.js';
-import {TILE_SIZE, WORLD_HEIGHT, WORLD_WIDTH} from './constants.js';
-
-const TILE_EMPTY = ' ';
-const TILE_PLATFORM = '=';
-const TILE_COIN = 'o';
-const TILE_EXIT = '@';
-const TILE_PLAYER = '&';
+import {TILE_SIZE} from './constants.js';
+import {parseWorld} from './world.js';
 
 // 20x16
 const world = `
   o   &      @
 ====================
 `.split('\n').slice(1,-1).join('\n');
-
-function parseWorld(worldString) {
-    const result = Array(WORLD_HEIGHT);
-    const lines = worldString.split('\n').map((line) => line.split(''));
-
-    if (lines.length < WORLD_HEIGHT) {
-        console.warn(`Game world has too few rows (${lines.length}, expected ${WORLD_HEIGHT}). Topmost rows will be blank.`);
-    } else if (lines.length > WORLD_HEIGHT) {
-        console.warn(`Game world has too many rows (${lines.length}, expected ${WORLD_HEIGHT}). Topmost rows will be dropped.`);
-    }
-
-    for (let y = 1; y <= WORLD_HEIGHT; y++) {
-        const row = Array(WORLD_WIDTH);
-        result[WORLD_HEIGHT-y] = row;
-        if (y > lines.length) {
-            row.fill(TILE_EMPTY);
-        } else {
-            const line = lines[lines.length - y];
-            if (line.length < WORLD_WIDTH) {
-                console.warn(`Game world has too few columns on line ${lines.length - y} (${line.length}, expected ${WORLD_WIDTH}). Rightmost columns will be blank.`);
-            } else if (line.length > WORLD_WIDTH) {
-                console.warn(`Game world has too many columns on line ${lines.length - y} (${line.length}, expected ${WORLD_WIDTH}). Rightmost columns will be dropped.`);
-            }
-
-            for (let x = 0; x < WORLD_WIDTH; x++) {
-                if (x >= line.length) {
-                    row[x] = TILE_EMPTY;
-                } else {
-                    row[x] = line[x];
-                }
-            }
-        }
-    }
-    return result;
-}
 
 const workspace = Blockly.inject('workspace', {toolbox: toolbox});
 document.getElementById('start').addEventListener('click', () => {
@@ -85,39 +45,26 @@ function preload() {
 function create() {
     this.add.image(width / 2, height / 2, 'background').setDisplaySize(width, height);
 
-    const tiles = parseWorld(world);
-
-    for (let y = 0; y < WORLD_HEIGHT; y++) {
-        for (let x = 0; x < WORLD_WIDTH; x++) {
-            const tile = tiles[y][x];
-            const xPos = x * TILE_SIZE + TILE_SIZE / 2;
-            const yPos = y * TILE_SIZE + TILE_SIZE / 2;
-            if (tile === TILE_PLATFORM) {
-                const left = x === 0 || tiles[y][x - 1] === TILE_PLATFORM;
-                const right = x === WORLD_WIDTH - 1 || tiles[y][x + 1] === TILE_PLATFORM;
-                let image = 'grass';
-                if (left && right) {
-                    image = 'grassMid';
-                } else if (left) {
-                    image = 'grassRight';
-                } else if (right) {
-                    image = 'grassLeft';
-                }
-                this.add.image(xPos, yPos, 'sprites', image);
-            } else if (tile === TILE_COIN) {
-                this.add.image(xPos, yPos, 'sprites', 'coinGold');
-            } else if (tile === TILE_EXIT) {
-                if (y === 0 || tiles[y - 1][x] !== ' ') {
-                    throw new Error('Tile above the door must be empty');
-                }
-                this.add.image(xPos, yPos, 'sprites', 'doorClosed_mid');
-                this.add.image(xPos, yPos - TILE_SIZE, 'sprites', 'doorClosed_top');
-            } else if (tile === TILE_PLAYER) { // player
-                if (y === 0 || tiles[y - 1][x] !== ' ') {
-                    throw new Error('Player must have free space above him.');
-                }
-                this.add.image(xPos, yPos - TILE_SIZE / 2, 'sprites', 'alienGreen_front');
-            }
+    const entities = parseWorld(world);
+    entities.forEach((entity) => {
+        const x = entity.x * TILE_SIZE + TILE_SIZE / 2;
+        const y2 = entity.y * TILE_SIZE;
+        const y = y2 + TILE_SIZE / 2;
+        switch (entity.type) {
+            case 'platform':
+                this.add.image(x, y, 'sprites', `grass${entity.connection}`);
+                break;
+            case 'coin':
+                this.add.image(x, y, 'sprites', 'coinGold');
+                break;
+            case 'player':
+                this.add.image(x, y2, 'sprites', 'alienGreen_front');
+                break;
+            case 'exit':
+                this.add.image(x, y2, 'sprites', 'doorClosed');
+                break;
+            case 'error':
+                this.add.image(x, y, 'sprites', 'hudX');
         }
-    }
+    });
 }

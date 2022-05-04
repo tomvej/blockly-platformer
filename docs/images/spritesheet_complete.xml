@@ -107,8 +107,10 @@
 	<SubTexture name="dirtLeft" x="1690" y="910" width="128" height="128"/>
 	<SubTexture name="dirtMid" x="1690" y="780" width="128" height="128"/>
 	<SubTexture name="dirtRight" x="1690" y="650" width="128" height="128"/>
+	<SubTexture name="doorClosed" x="2210" y="1170" width="128" height="256" />
 	<SubTexture name="doorClosed_mid" x="2210" y="1300" width="128" height="128"/>
 	<SubTexture name="doorClosed_top" x="2210" y="1170" width="128" height="128"/>
+	<SubTexture name="doorOpen" x="2210" y="910" width="128" height="256"/>
 	<SubTexture name="doorOpen_mid" x="2210" y="1040" width="128" height="128"/>
 	<SubTexture name="doorOpen_top" x="2210" y="910" width="128" height="128"/>
 	<SubTexture name="fence" x="2210" y="780" width="128" height="128"/>
