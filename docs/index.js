@@ -1,8 +1,6 @@
 import {toolbox} from './blocks.js';
+import {TILE_SIZE, WORLD_HEIGHT, WORLD_WIDTH} from './constants.js';
 
-const WORLD_WIDTH = 20;
-const WORLD_HEIGHT = 16;
-const TILE_SIZE = 128;
 const TILE_EMPTY = ' ';
 const TILE_PLATFORM = '=';
 const TILE_COIN = 'o';
