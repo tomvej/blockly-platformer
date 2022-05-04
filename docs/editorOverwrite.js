@@ -1,7 +1,6 @@
 export function setToOverwrite(editor) {
     const width = editor.cols;
     const height = editor.rows;
-    console.log(width, height);
     document.addEventListener('selectionchange', (event) => {
         if (event.target === editor) {
             const start = editor.selectionStart;
@@ -36,8 +35,12 @@ export function setToOverwrite(editor) {
                     start += 1;
                 }
                 break;
-            case 'Delete':
             case 'Backspace':
+                if (start % (width + 1) > 0) {
+                    start -= 1;
+                }
+            case 'Delete':
+                editor.value = `${editor.value.substring(0, start)} ${editor.value.substring(start + 1)}`;
                 break;
             default:
                 arrow = false;
