@@ -30,10 +30,18 @@
             width: 640px;
             height: 512px;
         }
+
+        #world-editor {
+            resize: none;
+        }
     </style>
 </head>
 <body>
     <div class="main">
+        <div class="controls">
+            <textarea id="world-editor" cols="20" rows="16" wrap="hard"></textarea>
+            <button type="button" id="regenerate">Přegeneruj svět</button>
+        </div>
         <div class="controls">
             <div id="game"></div>
             <div id="workspace"></div>

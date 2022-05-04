@@ -1,12 +1,12 @@
 import {toolbox} from './blocks.js';
 import {TILE_SIZE} from './constants.js';
-import {parseWorld} from './world.js';
+import {parseWorld, defaultWorld} from './world.js';
 
-// 20x16
-const world = `
-  o   &      @
-====================
-`.split('\n').slice(1,-1).join('\n');
+const worldEditor = document.getElementById('world-editor');
+worldEditor.value = defaultWorld;
+document.getElementById('regenerate').addEventListener('click', () => {
+    game.game.scene.start('default');
+})
 
 const workspace = Blockly.inject('workspace', {toolbox: toolbox});
 document.getElementById('start').addEventListener('click', () => {
@@ -21,7 +21,9 @@ const gameElement = document.getElementById('game')
 const width = 2560;
 const height = 2048;
 
-new Phaser.Game({
+const game = {};
+
+game.game = new Phaser.Game({
     type: Phaser.AUTO,
     parent: gameElement,
     width: gameElement.offsetWidth,
@@ -43,10 +45,6 @@ new Phaser.Game({
         create,
     }
 });
-
-const game = {
-
-};
 
 function preload() {
     this.load.image('background', 'images/blue_grass.png');
@@ -72,7 +70,7 @@ function create() {
     game.coins = this.physics.add.staticGroup();
     game.exits = this.physics.add.staticGroup();
 
-    const entities = parseWorld(world);
+    const entities = parseWorld(worldEditor.value);
     entities.forEach((entity) => {
         const x = entity.x * TILE_SIZE + TILE_SIZE / 2;
         const y2 = entity.y * TILE_SIZE;

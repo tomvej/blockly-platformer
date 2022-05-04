@@ -6,6 +6,8 @@ const TILE_COIN = 'o';
 const TILE_EXIT = '@';
 const TILE_PLAYER = '&';
 
+export const defaultWorld = `${`${TILE_EMPTY.repeat(20)}\n`.repeat(15)}${TILE_GROUND.repeat(20)}`
+
 function checkWorldSize(rows) {
     if (rows.length < WORLD_HEIGHT) {
         console.warn(`Game world has too few rows (${rows.length}, expected ${WORLD_HEIGHT}). Topmost rows will be blank.`);
