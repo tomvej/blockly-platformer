@@ -74,6 +74,11 @@ function create() {
         frames: [{key: 'sprites', frame: 'alienGreen_jump'}],
         frameRate: 15,
     });
+    this.anims.create({
+        key: 'door-open',
+        frames: [{key: 'sprites', frame: 'doorOpen'}],
+        frameRate: 15,
+    });
 
     game.platforms = this.physics.add.staticGroup();
     game.edges = this.physics.add.staticGroup();
@@ -118,6 +123,7 @@ function create() {
     this.physics.add.collider(game.platforms, game.player);
     this.physics.add.overlap(game.player, game.coins, collectCoin);
     this.physics.add.overlap(game.player, game.edges, jumpOnEdge);
+    this.physics.add.overlap(game.player, game.exits, exit);
 
     this.scene.pause();
 }
@@ -152,5 +158,12 @@ function jumpOnEdge(player, edge) {
 
     if (player.body.onFloor() && ((type === 'left' && touching.left) || (type === 'right' && touching.right))) {
         game.player.setVelocityY(-480);
+    }
+}
+
+function exit(player, exit) {
+    if (game.coins.countActive(true) === 0) {
+        player.disableBody(true, true);
+        exit.anims.play('door-open', true);
     }
 }
