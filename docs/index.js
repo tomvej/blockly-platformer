@@ -86,7 +86,7 @@ function create() {
     game.exits = this.physics.add.staticGroup();
 
     const createEdge = (x, y, type) => {
-        const edge = this.add.rectangle(x, y-TILE_SIZE, 10, TILE_SIZE, 0xff0000, 0.5);
+        const edge = this.add.rectangle(x, y-TILE_SIZE, 10, TILE_SIZE);
         edge.setData('type', type);
         game.edges.add(edge);
     }
