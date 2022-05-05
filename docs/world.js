@@ -79,7 +79,8 @@ export function parseWorld(worldString) {
                 }
                 entities.push({type: 'platform', x, y, connection, left, right});
             } else if (TILE_COIN === tile(x,y)) {
-                entities.push({type: 'coin', x, y});
+                const grounded = !tile(x,y+1) || tile(x,y+1) === TILE_GROUND;
+                entities.push({type: 'coin', x, y, grounded});
             } else if (TILE_EXIT === tile(x,y)) {
                 if (tile(x,y-1) && tile(x,y-1) !== TILE_EMPTY) {
                     console.error(`Exit on [${x},${y}] has another object directly above it! Exit is always two spaces high.`);

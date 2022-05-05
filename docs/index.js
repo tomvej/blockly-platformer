@@ -97,8 +97,10 @@ function create() {
                 !entity.left && createEdge(x - TILE_SIZE/2, y, 'left');
                 !entity.right && createEdge(x + TILE_SIZE/2, y, 'right');
                 break;
-            case 'coin':
-                game.coins.create(x, y, 'sprites', 'coinGold');
+            case 'coin': {
+                const coin = game.coins.create(x, y, 'sprites', 'coinGold');
+                coin.setData('grounded', entity.grounded);
+            }
                 break;
             case 'player':
                 game.player = this.physics.add.sprite(x, y2, 'sprites', 'alienGreen_front');
@@ -135,8 +137,11 @@ function update() {
 }
 
 function collectCoin(player, coin) {
-    if (player.body.touching.down) {
+    const grounded = coin.getData('grounded');
+    if (!grounded || player.body.onFloor()) {
         coin.disableBody(true, true);
+    }
+    if (player.body.onFloor()) {
         player.toggleFlipX();
     }
 }
