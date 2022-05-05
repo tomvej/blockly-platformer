@@ -12,10 +12,10 @@ setToOverwrite(worldEditor);
 
 const workspace = Blockly.inject('workspace', {toolbox: toolbox});
 document.getElementById('start').addEventListener('click', () => {
-
+    game.game.scene.resume('default');
 });
 document.getElementById('reset').addEventListener('click', () => {
-
+    game.game.scene.start('default');
 });
 
 const gameElement = document.getElementById('game')
@@ -45,6 +45,7 @@ game.game = new Phaser.Game({
     scene: {
         preload,
         create,
+        update,
     }
 });
 
@@ -95,5 +96,28 @@ function create() {
         }
     });
 
+    game.player.setCollideWorldBounds(true);
     this.physics.add.collider(game.platforms, game.player);
+    this.physics.add.overlap(game.player, game.coins, collectCoin);
+
+    this.scene.pause();
+}
+
+function update() {
+    if (game.player.body.touching.down) {
+        if (game.player.flipX) {
+            game.player.setVelocityX(-320);
+        } else {
+            game.player.setVelocityX(320);
+        }
+        game.player.anims.play('playerWalk', true);
+    } else {
+        game.player.anims.play('playerJump', true);
+    }
+
+}
+
+function collectCoin(player, coin, ) {
+    coin.disableBody(true, true);
+    player.toggleFlipX();
 }
