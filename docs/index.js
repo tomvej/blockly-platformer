@@ -4,11 +4,13 @@ import {parseWorld, defaultWorld} from './world.js';
 import {setToOverwrite} from "./editorOverwrite.js";
 
 const worldEditor = document.getElementById('world-editor');
-worldEditor.value = localStorage.getItem('editorValue') ?? defaultWorld;
+let world = localStorage.getItem('editorValue') ?? defaultWorld;
+worldEditor.value = world;
 worldEditor.addEventListener('change', () => {
     localStorage.setItem('editorValue', worldEditor.value);
 })
 document.getElementById('regenerate').addEventListener('click', () => {
+    world = worldEditor.value;
     game.game.scene.start('default');
 })
 document.getElementById('clear').addEventListener('click', () => {
@@ -91,7 +93,7 @@ function create() {
         game.edges.add(edge);
     }
 
-    const entities = parseWorld(worldEditor.value);
+    const entities = parseWorld(world);
     entities.forEach((entity) => {
         const x = entity.x * TILE_SIZE + TILE_SIZE / 2;
         const y2 = entity.y * TILE_SIZE;
