@@ -77,7 +77,7 @@ export function parseWorld(worldString) {
                 } else if (right) {
                     connection = 'Left';
                 }
-                entities.push({type: 'platform', x, y, connection});
+                entities.push({type: 'platform', x, y, connection, left, right});
             } else if (TILE_COIN === tile(x,y)) {
                 entities.push({type: 'coin', x, y});
             } else if (TILE_EXIT === tile(x,y)) {

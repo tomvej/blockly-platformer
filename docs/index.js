@@ -76,8 +76,15 @@ function create() {
     });
 
     game.platforms = this.physics.add.staticGroup();
+    game.edges = this.physics.add.staticGroup();
     game.coins = this.physics.add.staticGroup();
     game.exits = this.physics.add.staticGroup();
+
+    const createEdge = (x, y, type) => {
+        const edge = this.add.rectangle(x, y-TILE_SIZE, 10, TILE_SIZE, 0xff0000, 0.5);
+        edge.setData('type', type);
+        game.edges.add(edge);
+    }
 
     const entities = parseWorld(worldEditor.value);
     entities.forEach((entity) => {
@@ -87,6 +94,8 @@ function create() {
         switch (entity.type) {
             case 'platform':
                 game.platforms.create(x, y, 'sprites', `grass${entity.connection}`);
+                !entity.left && createEdge(x - TILE_SIZE/2, y, 'left');
+                !entity.right && createEdge(x + TILE_SIZE/2, y, 'right');
                 break;
             case 'coin':
                 game.coins.create(x, y, 'sprites', 'coinGold');
@@ -106,12 +115,13 @@ function create() {
     game.player.setCollideWorldBounds(true);
     this.physics.add.collider(game.platforms, game.player);
     this.physics.add.overlap(game.player, game.coins, collectCoin);
+    this.physics.add.overlap(game.player, game.edges, jumpOnEdge);
 
     this.scene.pause();
 }
 
 function update() {
-    if (game.player.body.touching.down) {
+    if (game.player.body.onFloor()) {
         if (game.player.flipX) {
             game.player.setVelocityX(-320);
         } else {
@@ -128,5 +138,14 @@ function collectCoin(player, coin) {
     if (player.body.touching.down) {
         coin.disableBody(true, true);
         player.toggleFlipX();
+    }
+}
+
+function jumpOnEdge(player, edge) {
+    const type = edge.getData('type');
+    const touching = player.body.touching;
+
+    if (player.body.onFloor() && ((type === 'left' && touching.left) || (type === 'right' && touching.right))) {
+        game.player.setVelocityY(-480);
     }
 }
