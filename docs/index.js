@@ -11,6 +11,9 @@ worldEditor.addEventListener('change', () => {
 document.getElementById('regenerate').addEventListener('click', () => {
     game.game.scene.start('default');
 })
+document.getElementById('clear').addEventListener('click', () => {
+    worldEditor.value = defaultWorld;
+});
 setToOverwrite(worldEditor);
 
 const workspace = Blockly.inject('workspace', {toolbox: toolbox});

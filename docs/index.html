@@ -12,7 +12,7 @@
         .main {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: stretch;
             gap: 10px;
         }
         .controls {
@@ -40,7 +40,10 @@
     <div class="main">
         <div class="controls">
             <textarea id="world-editor" cols="20" rows="16" wrap="hard"></textarea>
-            <button type="button" id="regenerate">Přegeneruj svět</button>
+            <div class="main">
+                <button type="button" id="regenerate">Přegeneruj svět</button>
+                <button type="button" id="clear">Vyčisti editor</button>
+            </div>
         </div>
         <div class="controls">
             <div id="game"></div>
