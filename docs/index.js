@@ -125,7 +125,7 @@ function create() {
     this.physics.add.collider(game.platforms, game.player);
     this.physics.add.overlap(game.player, game.coins, collectCoin);
     this.physics.add.overlap(game.player, game.edges, jumpOnEdge);
-    this.physics.add.overlap(game.player, game.exits, exit);
+    this.physics.add.overlap(game.player, game.exits, exit, null, this);
 
     this.scene.pause();
 }
@@ -167,5 +167,8 @@ function exit(player, exit) {
     if (game.coins.countActive(true) === 0) {
         player.disableBody(true, true);
         exit.anims.play('door-open', true);
+        const camera = this.cameras.main;
+        camera.flash(350);
+        camera.once('cameraflashcomplete', () => camera.flash(350));
     }
 }
