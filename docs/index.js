@@ -123,7 +123,9 @@ function update() {
 
 }
 
-function collectCoin(player, coin, ) {
-    coin.disableBody(true, true);
-    player.toggleFlipX();
+function collectCoin(player, coin) {
+    if (player.body.touching.down) {
+        coin.disableBody(true, true);
+        player.toggleFlipX();
+    }
 }
