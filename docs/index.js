@@ -4,7 +4,10 @@ import {parseWorld, defaultWorld} from './world.js';
 import {setToOverwrite} from "./editorOverwrite.js";
 
 const worldEditor = document.getElementById('world-editor');
-worldEditor.value = defaultWorld;
+worldEditor.value = localStorage.getItem('editorValue') ?? defaultWorld;
+worldEditor.addEventListener('change', () => {
+    localStorage.setItem('editorValue', worldEditor.value);
+})
 document.getElementById('regenerate').addEventListener('click', () => {
     game.game.scene.start('default');
 })
