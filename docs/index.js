@@ -36,7 +36,7 @@ game.game = new Phaser.Game({
         default: 'arcade',
         arcade: {
             gravity: {y: 300},
-            debug: false,
+            debug: true,
         }
     },
     scene: {
@@ -141,8 +141,8 @@ function create() {
     game.player.setDepth(1);
     game.player.setCollideWorldBounds(true);
     this.physics.add.collider(game.platforms, game.player, onGround);
-    this.physics.add.overlap(game.player, game.coins, collectCoin);
-    this.physics.add.overlap(game.player, game.edges, jumpOnEdge);
+    this.physics.add.overlap(game.player, game.coins, onCoin);
+    this.physics.add.overlap(game.player, game.edges, onEdge);
     this.physics.add.overlap(game.player, game.exits, exit, null, this);
 
     game.running = false;
@@ -162,7 +162,7 @@ function update() {
 
 }
 
-function collectCoin(player, coin) {
+function onCoin(player, coin) {
     const grounded = coin.getData('grounded');
     if (!grounded || player.body.onFloor()) {
         coin.disableBody(true, true);
@@ -170,7 +170,7 @@ function collectCoin(player, coin) {
     game.events.onCoin();
 }
 
-function jumpOnEdge(player, edge) {
+function onEdge(player, edge) {
     const type = edge.getData('type');
     const touching = player.body.touching;
 
