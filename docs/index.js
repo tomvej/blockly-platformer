@@ -159,7 +159,9 @@ function update() {
     } else {
         game.player.anims.play('playerJump', true);
     }
-
+    if (game.currentEdge && !this.physics.overlap(game.player, game.currentEdge)) {
+        game.currentEdge = null;
+    }
 }
 
 function onCoin(player, coin) {
@@ -174,9 +176,10 @@ function onEdge(player, edge) {
     const type = edge.getData('type');
     const touching = player.body.touching;
 
-    if (player.body.onFloor() && ((type === 'left' && touching.left) || (type === 'right' && touching.right))) {
+    if (player.body.onFloor() && game.currentEdge !== edge && ((type === 'left' && touching.left) || (type === 'right' && touching.right))) {
         game.events.onEdge();
     }
+    game.currentEdge = edge;
 }
 
 function exit(player, exit) {
