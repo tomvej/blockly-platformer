@@ -1,4 +1,4 @@
-import {toolbox} from './blocks.js';
+import {maxInstancesMap, toolbox} from './blocks.js';
 import {SCALE, TILE_SIZE, WORLD_HEIGHT, WORLD_WIDTH} from './constants.js';
 import {defaultWorld, parseWorld} from './world.js';
 import {setToOverwrite} from "./editorOverwrite.js";
@@ -18,7 +18,10 @@ document.getElementById('clear').addEventListener('click', () => {
 });
 setToOverwrite(worldEditor);
 
-const workspace = Blockly.inject('workspace', {toolbox: toolbox});
+const workspace = Blockly.inject('workspace', {
+    toolbox,
+    maxInstances: maxInstancesMap,
+});
 document.getElementById('start').addEventListener('click', () => {
     game.game.scene.resume('default');
 });
