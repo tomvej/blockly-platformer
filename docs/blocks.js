@@ -9,6 +9,7 @@ export const maxInstancesMap = {};
 Blockly.Themes.Classic.startHats = true;
 const COLOUR_ACTIONS = 110;
 const COLOUR_EVENTS = 55;
+const COLOUR_LOGIC = Blockly.Msg.LOGIC_HUE;
 
 Blockly.Blocks.actions_turn = defineBlock({
     message0: 'otoč se',
@@ -61,6 +62,17 @@ Blockly.JavaScript.events_coin = function(block) {
     }
 }
 
+Blockly.Blocks.conditions_direction = defineBlock({
+    message0: 'jdu %1',
+    args0: [{name: 'DIRECTION', type: 'field_dropdown', options: [['doleva', 'LEFT'], ['doprava', 'RIGHT']]}],
+    output: 'Boolean',
+    colour: COLOUR_LOGIC,
+});
+Blockly.JavaScript.conditions_direction = function(block) {
+    const direction = block.getFieldValue('DIRECTION');
+    return [`game.control.hasDirection('${direction}')`, Blockly.JavaScript.ORDER_NONE];
+}
+
 // REMOVE next statements from conditions
 const ifInit = Blockly.Blocks.controls_if.init;
 Blockly.Blocks.controls_if.init = function() {
@@ -108,7 +120,7 @@ export const toolbox = {
     }, {
         kind: 'category',
         name: 'Podmínky',
-        colour: Blockly.Msg.LOGIC_HUE,
+        colour: COLOUR_LOGIC,
         contents: [{
             kind: 'block',
             type: 'controls_if',
@@ -116,6 +128,18 @@ export const toolbox = {
             kind: 'block',
             type: 'controls_if',
             extraState: {hasElse: true},
+        }, {
+            kind: 'block',
+            type: 'conditions_direction',
+            fields: {
+                DIRECTION: 'RIGHT'
+            }
+        }, {
+            kind: 'block',
+            type: 'conditions_direction',
+            fields: {
+                DIRECTION: 'LEFT'
+            }
         }],
     }],
 }

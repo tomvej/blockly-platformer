@@ -70,6 +70,14 @@ game.control = {
         if (game.running && game.player.body.onFloor()) {
             game.player.toggleFlipX();
         }
+    },
+    hasDirection(direction) {
+        switch(direction) {
+            case 'LEFT':
+                return game.player.flipX;
+            case 'RIGHT':
+                return !game.player.flipX;
+        }
     }
 }
 
