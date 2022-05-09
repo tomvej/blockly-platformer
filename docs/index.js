@@ -18,17 +18,6 @@ document.getElementById('clear').addEventListener('click', () => {
 });
 setToOverwrite(worldEditor);
 
-const workspace = Blockly.inject('workspace', {
-    toolbox,
-    maxInstances: maxInstancesMap,
-});
-document.getElementById('start').addEventListener('click', () => {
-    game.game.scene.resume('default');
-});
-document.getElementById('reset').addEventListener('click', () => {
-    game.game.scene.start('default');
-});
-
 const width = WORLD_WIDTH * TILE_SIZE;
 const height = WORLD_HEIGHT * TILE_SIZE;
 
@@ -59,6 +48,19 @@ function preload() {
 }
 
 const scale = (object) => object.setScale(SCALE).refreshBody();
+
+game.control = {
+    jump() {
+        if (game.running && game.player.body.onFloor()) {
+            game.player.setVelocityY(-240);
+        }
+    },
+    turn() {
+        if (game.running && game.player.body.onFloor()) {
+            game.player.toggleFlipX();
+        }
+    }
+}
 
 function create() {
     this.add.image(width / 2, height / 2, 'background').setDisplaySize(width, height);
@@ -125,6 +127,7 @@ function create() {
     this.physics.add.overlap(game.player, game.edges, jumpOnEdge);
     this.physics.add.overlap(game.player, game.exits, exit, null, this);
 
+    game.running = false;
     this.scene.pause();
 }
 
@@ -147,9 +150,7 @@ function collectCoin(player, coin) {
     if (!grounded || player.body.onFloor()) {
         coin.disableBody(true, true);
     }
-    if (player.body.onFloor()) {
-        player.toggleFlipX();
-    }
+    game.events.onCoin();
 }
 
 function jumpOnEdge(player, edge) {
@@ -157,7 +158,7 @@ function jumpOnEdge(player, edge) {
     const touching = player.body.touching;
 
     if (player.body.onFloor() && ((type === 'left' && touching.left) || (type === 'right' && touching.right))) {
-        game.player.setVelocityY(-240);
+        game.events.onEdge();
     }
 }
 
@@ -170,3 +171,30 @@ function exit(player, exit) {
         camera.once('cameraflashcomplete', () => camera.flash(350));
     }
 }
+
+function clearEvents() {
+    game.events = {
+        onCoin: () => {},
+        onEdge: () => {},
+    }
+}
+
+const workspace = Blockly.inject('workspace', {
+    toolbox,
+    maxInstances: maxInstancesMap,
+});
+document.getElementById('start').addEventListener('click', () => {
+    const code = Blockly.JavaScript.workspaceToCode(workspace);
+    console.log(code);
+    try {
+        clearEvents();
+        eval(code);
+        game.running = true;
+        game.game.scene.resume('default');
+    } catch (e) {
+        console.log('Cannot start', e);
+    }
+});
+document.getElementById('reset').addEventListener('click', () => {
+    game.game.scene.start('default');
+});

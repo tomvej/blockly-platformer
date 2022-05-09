@@ -16,6 +16,9 @@ Blockly.Blocks.actions_turn = defineBlock({
     nextStatement: null,
     colour: COLOUR_ACTIONS,
 });
+Blockly.JavaScript.actions_turn = function() {
+    return 'game.control.turn();\n';
+}
 
 Blockly.Blocks.actions_jump = defineBlock({
     message0: 'skoč %1',
@@ -23,6 +26,9 @@ Blockly.Blocks.actions_jump = defineBlock({
     previousStatement: null,
     colour: COLOUR_ACTIONS,
 });
+Blockly.JavaScript.actions_jump = function() {
+    return `game.control.jump();\n`;
+}
 
 Blockly.Blocks.events_edge = defineBlock({
     message0: 'hrana',
@@ -30,6 +36,14 @@ Blockly.Blocks.events_edge = defineBlock({
     colour: COLOUR_EVENTS,
 });
 maxInstancesMap.events_edge = 1;
+Blockly.JavaScript.events_edge = function(block) {
+    const nextBlock = block.getNextBlock();
+    if (nextBlock) {
+        return `game.events.onEdge = function onEdge() {\n${Blockly.JavaScript.blockToCode(nextBlock)}};\n`;
+    } else {
+        return null;
+    }
+}
 
 Blockly.Blocks.events_coin = defineBlock({
     message0: 'mince',
@@ -37,6 +51,14 @@ Blockly.Blocks.events_coin = defineBlock({
     colour: COLOUR_EVENTS,
 })
 maxInstancesMap.events_coin = 1;
+Blockly.JavaScript.events_coin = function(block) {
+    const nextBlock = block.getNextBlock();
+    if (nextBlock) {
+        return `game.events.onCoin = function onCoin() {\n${Blockly.JavaScript.blockToCode(nextBlock)}};\n`;
+    } else {
+        return null;
+    }
+}
 
 export const toolbox = {
     contents: [{
