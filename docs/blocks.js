@@ -26,8 +26,9 @@ Blockly.Blocks.actions_jump = defineBlock({
     previousStatement: null,
     colour: COLOUR_ACTIONS,
 });
-Blockly.JavaScript.actions_jump = function() {
-    return `game.control.jump();\n`;
+Blockly.JavaScript.actions_jump = function(block) {
+    const type = block.getFieldValue('TYPE');
+    return `game.control.jump('${type}');\n`;
 }
 
 Blockly.Blocks.events_edge = defineBlock({

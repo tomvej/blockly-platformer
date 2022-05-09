@@ -205,7 +205,7 @@ document.getElementById('start').addEventListener('click', () => {
         game.running = true;
         game.game.scene.resume('default');
     } catch (e) {
-        console.log('Cannot start', e);
+        console.error('Cannot start', e);
     }
 });
 document.getElementById('reset').addEventListener('click', () => {
