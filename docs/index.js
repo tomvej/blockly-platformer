@@ -1,6 +1,6 @@
 import {toolbox} from './blocks.js';
-import {TILE_SIZE} from './constants.js';
-import {parseWorld, defaultWorld} from './world.js';
+import {SCALE, TILE_SIZE, WORLD_HEIGHT, WORLD_WIDTH} from './constants.js';
+import {defaultWorld, parseWorld} from './world.js';
 import {setToOverwrite} from "./editorOverwrite.js";
 
 const worldEditor = document.getElementById('world-editor');
@@ -26,29 +26,22 @@ document.getElementById('reset').addEventListener('click', () => {
     game.game.scene.start('default');
 });
 
-const gameElement = document.getElementById('game')
-
-const width = 2560;
-const height = 2048;
+const width = WORLD_WIDTH * TILE_SIZE;
+const height = WORLD_HEIGHT * TILE_SIZE;
 
 const game = {};
 
 game.game = new Phaser.Game({
     type: Phaser.AUTO,
-    parent: gameElement,
-    width: gameElement.offsetWidth,
-    height: gameElement.offsetHeight,
+    parent: document.getElementById('game'),
+    width: width,
+    height: height,
     physics: {
         default: 'arcade',
         arcade: {
             gravity: {y: 300},
             debug: false,
         }
-    },
-    scale: {
-        width,
-        height,
-        mode: Phaser.Scale.FIT,
     },
     scene: {
         preload,
@@ -61,6 +54,8 @@ function preload() {
     this.load.image('background', 'images/blue_grass.png');
     this.load.atlasXML('sprites', 'images/spritesheet_complete.png', 'images/spritesheet_complete.xml');
 }
+
+const scale = (object) => object.setScale(SCALE).refreshBody();
 
 function create() {
     this.add.image(width / 2, height / 2, 'background').setDisplaySize(width, height);
@@ -100,23 +95,23 @@ function create() {
         const y = y2 + TILE_SIZE / 2;
         switch (entity.type) {
             case 'platform':
-                game.platforms.create(x, y, 'sprites', `grass${entity.connection}`);
+                scale(game.platforms.create(x, y, 'sprites', `grass${entity.connection}`))
                 !entity.left && createEdge(x - TILE_SIZE/2, y, 'left');
                 !entity.right && createEdge(x + TILE_SIZE/2, y, 'right');
                 break;
             case 'coin': {
-                const coin = game.coins.create(x, y, 'sprites', 'coinGold');
+                const coin = scale(game.coins.create(x, y, 'sprites', 'coinGold'));
                 coin.setData('grounded', entity.grounded);
             }
                 break;
             case 'player':
-                game.player = this.physics.add.sprite(x, y2, 'sprites', 'alienGreen_front');
+                game.player = scale(this.physics.add.sprite(x, y2, 'sprites', 'alienGreen_front'));
                 break;
             case 'exit':
-                game.exits.create(x, y2, 'sprites', 'doorClosed');
+                scale(game.exits.create(x, y2, 'sprites', 'doorClosed'));
                 break;
             case 'error':
-                this.add.image(x, y, 'sprites', 'hudX');
+                scale(this.add.image(x, y, 'sprites', 'hudX'));
         }
     });
 
@@ -133,9 +128,9 @@ function create() {
 function update() {
     if (game.player.body.onFloor()) {
         if (game.player.flipX) {
-            game.player.setVelocityX(-320);
+            game.player.setVelocityX(-160);
         } else {
-            game.player.setVelocityX(320);
+            game.player.setVelocityX(160);
         }
         game.player.anims.play('playerWalk', true);
     } else {
@@ -159,7 +154,7 @@ function jumpOnEdge(player, edge) {
     const touching = player.body.touching;
 
     if (player.body.onFloor() && ((type === 'left' && touching.left) || (type === 'right' && touching.right))) {
-        game.player.setVelocityY(-480);
+        game.player.setVelocityY(-240);
     }
 }
 
