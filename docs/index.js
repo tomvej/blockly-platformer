@@ -21,7 +21,11 @@ setToOverwrite(worldEditor);
 const width = WORLD_WIDTH * TILE_SIZE;
 const height = WORLD_HEIGHT * TILE_SIZE;
 
-const game = {};
+const game = {
+    get direction() {
+        return game.player.flipX ? -1 : 1;
+    },
+};
 
 game.game = new Phaser.Game({
     type: Phaser.AUTO,
@@ -50,9 +54,16 @@ function preload() {
 const scale = (object) => object.setScale(SCALE).refreshBody();
 
 game.control = {
-    jump() {
+    jump(type) {
         if (game.running && game.player.body.onFloor()) {
-            game.player.setVelocityY(-240);
+            switch (type) {
+                case 'LONG':
+                    game.player.setVelocity(game.direction * 240, -120);
+                    break;
+                case 'HIGH':
+                    game.player.setVelocity(game.direction * 80, -320);
+                    break;
+            }
         }
     },
     turn() {
@@ -123,7 +134,7 @@ function create() {
 
     game.player.setDepth(1);
     game.player.setCollideWorldBounds(true);
-    this.physics.add.collider(game.platforms, game.player);
+    this.physics.add.collider(game.platforms, game.player, onGround);
     this.physics.add.overlap(game.player, game.coins, collectCoin);
     this.physics.add.overlap(game.player, game.edges, jumpOnEdge);
     this.physics.add.overlap(game.player, game.exits, exit, null, this);
@@ -132,13 +143,12 @@ function create() {
     this.scene.pause();
 }
 
+function onGround() {
+    game.player.setVelocityX(game.direction * 160);
+}
+
 function update() {
     if (game.player.body.onFloor()) {
-        if (game.player.flipX) {
-            game.player.setVelocityX(-160);
-        } else {
-            game.player.setVelocityX(160);
-        }
         game.player.anims.play('playerWalk', true);
     } else {
         game.player.anims.play('playerJump', true);
