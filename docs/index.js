@@ -115,10 +115,8 @@ function create() {
                 !entity.left && createEdge(x - TILE_SIZE / 2, y, 'left');
                 !entity.right && createEdge(x + TILE_SIZE / 2, y, 'right');
                 break;
-            case 'coin': {
-                const coin = scale(game.coins.create(x, y, 'sprites', 'coinGold'));
-                coin.setData('grounded', entity.grounded);
-            }
+            case 'coin':
+                scale(game.coins.create(x, y, 'sprites', 'coinGold')).setData('grounded', entity.grounded);
                 break;
             case 'player':
                 game.player = this.physics.add.sprite(x, y2, 'sprites', 'alienGreen_front')
