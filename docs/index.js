@@ -1,5 +1,5 @@
 import {maxInstancesMap, toolbox} from './blocks.js';
-import {SCALE, TILE_SIZE, WORLD_HEIGHT, WORLD_WIDTH} from './constants.js';
+import {PLAYER_HEIGHT, SCALE, TILE_SIZE, WORLD_HEIGHT, WORLD_WIDTH} from './constants.js';
 import {defaultWorld, parseWorld} from './world.js';
 import {setToOverwrite} from "./editorOverwrite.js";
 
@@ -101,8 +101,8 @@ function create() {
         switch (entity.type) {
             case 'platform':
                 scale(game.platforms.create(x, y, 'sprites', `grass${entity.connection}`))
-                !entity.left && createEdge(x - TILE_SIZE/2, y, 'left');
-                !entity.right && createEdge(x + TILE_SIZE/2, y, 'right');
+                !entity.left && createEdge(x - TILE_SIZE / 2, y, 'left');
+                !entity.right && createEdge(x + TILE_SIZE / 2, y, 'right');
                 break;
             case 'coin': {
                 const coin = scale(game.coins.create(x, y, 'sprites', 'coinGold'));
@@ -110,7 +110,8 @@ function create() {
             }
                 break;
             case 'player':
-                game.player = scale(this.physics.add.sprite(x, y2, 'sprites', 'alienGreen_front'));
+                game.player = this.physics.add.sprite(x, y2, 'sprites', 'alienGreen_front')
+                    .setScale(SCALE).setSize(null, PLAYER_HEIGHT).setOffset(0, -2*TILE_SIZE + PLAYER_HEIGHT).refreshBody();
                 break;
             case 'exit':
                 scale(game.exits.create(x, y2, 'sprites', 'doorClosed'));
