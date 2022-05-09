@@ -61,6 +61,18 @@ Blockly.JavaScript.events_coin = function(block) {
     }
 }
 
+// REMOVE next statements from conditions
+const ifInit = Blockly.Blocks.controls_if.init;
+Blockly.Blocks.controls_if.init = function() {
+    ifInit.apply(this);
+    this.setNextStatement(false);
+}
+const ifElseInit = Blockly.Blocks.controls_ifelse.init;
+Blockly.Blocks.controls_ifelse. init = function () {
+    ifElseInit.apply(this);
+    this.setNextStatement(false);
+}
+
 export const toolbox = {
     contents: [{
         kind: 'category',
@@ -92,6 +104,18 @@ export const toolbox = {
         }, {
             kind: 'block',
             type: 'events_coin',
+        }],
+    }, {
+        kind: 'category',
+        name: 'Podmínky',
+        colour: Blockly.Msg.LOGIC_HUE,
+        contents: [{
+            kind: 'block',
+            type: 'controls_if',
+        }, {
+            kind: 'block',
+            type: 'controls_if',
+            extraState: {hasElse: true},
         }],
     }],
 }
