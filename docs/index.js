@@ -183,6 +183,19 @@ const workspace = Blockly.inject('workspace', {
     toolbox,
     maxInstances: maxInstancesMap,
 });
+workspace.addChangeListener(() => {
+    const blocks = Blockly.serialization.workspaces.save(workspace);
+    localStorage.setItem('workspaceValue', JSON.stringify(blocks));
+});
+try {
+    const blocks = localStorage.getItem('workspaceValue');
+    if (blocks) {
+        Blockly.serialization.workspaces.load(JSON.parse(blocks), workspace);
+    }
+} catch (e) {
+    console.error(e);
+}
+
 document.getElementById('start').addEventListener('click', () => {
     const code = Blockly.JavaScript.workspaceToCode(workspace);
     console.log(code);
