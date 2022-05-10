@@ -73,7 +73,18 @@ Blockly.Blocks.conditions_direction = defineBlock({
 });
 Blockly.JavaScript.conditions_direction = function(block) {
     const direction = block.getFieldValue('DIRECTION');
-    return [`game.control.hasDirection('${direction}')`, Blockly.JavaScript.ORDER_NONE];
+    return [`game.control.hasDirection('${direction}')`, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+}
+
+Blockly.Blocks.conditions_ground = defineBlock({
+    message0: 'jsem na %1',
+    args0: [{name: 'KIND', type: 'field_dropdown', options: [['trávě', 'grass'], ['písku', 'sand'], ['skále', 'stone']]}],
+    output: 'Boolean',
+    colour: COLOUR_LOGIC,
+});
+Blockly.JavaScript.conditions_ground = function(block) {
+    const groundType = block.getFieldValue('KIND');
+    return [`game.control.isOnGround('${groundType}')`, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 }
 
 // REMOVE next statements from conditions
@@ -145,6 +156,24 @@ export const toolbox = {
             type: 'conditions_direction',
             fields: {
                 DIRECTION: 'LEFT'
+            }
+        }, {
+            kind: 'block',
+            type: 'conditions_ground',
+            fields: {
+                KIND: 'grass',
+            }
+        }, {
+            kind: 'block',
+            type: 'conditions_ground',
+            fields: {
+                KIND: 'sand',
+            }
+        }, {
+            kind: 'block',
+            type: 'conditions_ground',
+            fields: {
+                KIND: 'stone',
             }
         }],
     }],

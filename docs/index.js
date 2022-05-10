@@ -78,7 +78,10 @@ game.control = {
             case 'RIGHT':
                 return !game.player.flipX;
         }
-    }
+    },
+    isOnGround(groundType) {
+        return game.state.groundType === groundType;
+    },
 }
 
 function create() {
@@ -154,8 +157,9 @@ function create() {
     this.scene.pause();
 }
 
-function onGround() {
+function onGround(player, ground) {
     game.player.setVelocityX(game.direction * 160);
+    game.state.groundType = ground.getData('kind');
 }
 
 function update() {
@@ -163,6 +167,7 @@ function update() {
         game.player.anims.play('playerWalk', true);
     } else {
         game.player.anims.play('playerJump', true);
+        game.state.groundType = null;
     }
     if (game.state.edge && !this.physics.overlap(game.player, game.state.edge)) {
         game.state.edge = null;
