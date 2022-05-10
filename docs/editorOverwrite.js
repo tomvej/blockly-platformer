@@ -3,6 +3,9 @@ import {TILE_EMPTY} from "./constants.js";
 export function setToOverwrite(editor, parseData = (x) => x) {
     const width = editor.cols;
     const height = editor.rows;
+    function removeAtPosition(position) {
+        editor.value = `${editor.value.substring(0, position)}${TILE_EMPTY}${editor.value.substring(position + 1)}`;
+    }
     document.addEventListener('selectionchange', (event) => {
         if (event.target === editor) {
             const start = editor.selectionStart;
@@ -41,9 +44,16 @@ export function setToOverwrite(editor, parseData = (x) => x) {
                 if (start % (width + 1) > 0) {
                     start -= 1;
                 }
+                removeAtPosition(start);
+                break;
             case 'Delete':
+                removeAtPosition(start)
+                break;
             case 'Space':
-                editor.value = `${editor.value.substring(0, start)}${TILE_EMPTY}${editor.value.substring(start + 1)}`;
+                removeAtPosition(start);
+                if (start % (width + 1) < width) {
+                    start += 1;
+                }
                 break;
             default:
                 arrow = false;
