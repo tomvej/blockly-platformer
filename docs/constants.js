@@ -9,3 +9,4 @@ export const TILE_GROUND = '=';
 export const TILE_COIN = 'o';
 export const TILE_EXIT = '@';
 export const TILE_PLAYER = '&';
+export const TILE_BUSH = '$';

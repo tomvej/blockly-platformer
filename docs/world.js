@@ -1,4 +1,13 @@
-import {TILE_COIN, TILE_EMPTY, TILE_EXIT, TILE_GROUND, TILE_PLAYER, WORLD_HEIGHT, WORLD_WIDTH} from "./constants.js";
+import {
+    TILE_BUSH,
+    TILE_COIN,
+    TILE_EMPTY,
+    TILE_EXIT,
+    TILE_GROUND,
+    TILE_PLAYER,
+    WORLD_HEIGHT,
+    WORLD_WIDTH
+} from "./constants.js";
 
 
 
@@ -93,6 +102,9 @@ export function parseWorld(worldString) {
                     hasPlayer = true;
                     entities.push({type: 'player', x, y});
                 }
+            } else if (TILE_BUSH === tile(x, y)) {
+                const grounded = !tile(x,y+1) || tile(x,y+1) === TILE_GROUND;
+                entities.push({type: 'bush', x, y, grounded});
             }
         }
     }

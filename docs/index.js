@@ -105,6 +105,7 @@ function create() {
     game.edges = this.physics.add.staticGroup();
     game.coins = this.physics.add.staticGroup();
     game.exits = this.physics.add.staticGroup();
+    game.bushes = this.physics.add.staticGroup();
 
     const createEdge = (x, y, type) => {
         const edge = this.add.rectangle(x, y-TILE_SIZE, 10, TILE_SIZE);
@@ -133,8 +134,12 @@ function create() {
             case 'exit':
                 scale(game.exits.create(x, y2, 'sprites', 'doorClosed'));
                 break;
+            case 'bush':
+                scale(game.bushes.create(x, y, 'sprites', 'bush')).setData('grounded', entity.grounded);
+                break;
             case 'error':
                 scale(this.add.image(x, y, 'sprites', 'hudX'));
+                break;
         }
     });
 
