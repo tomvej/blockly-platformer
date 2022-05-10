@@ -57,6 +57,14 @@ Blockly.Blocks.events_coin = defineBlock({
 maxInstancesMap.events_coin = 1;
 Blockly.JavaScript.events_coin = createEventGenerator('onCoin')
 
+Blockly.Blocks.events_bush = defineBlock({
+    message0: 'keř',
+    nextStatement: null,
+    colour: COLOUR_EVENTS,
+});
+maxInstancesMap.events_bush = 1;
+Blockly.JavaScript.events_bush = createEventGenerator('onBush');
+
 Blockly.Blocks.conditions_direction = defineBlock({
     message0: 'jdu %1',
     args0: [{name: 'DIRECTION', type: 'field_dropdown', options: [['doleva', 'LEFT'], ['doprava', 'RIGHT']]}],
@@ -111,6 +119,9 @@ export const toolbox = {
         }, {
             kind: 'block',
             type: 'events_coin',
+        }, {
+            kind: 'block',
+            type: 'events_bush',
         }],
     }, {
         kind: 'category',

@@ -149,6 +149,7 @@ function create() {
     this.physics.add.overlap(game.player, game.coins, onCoin);
     this.physics.add.overlap(game.player, game.edges, onEdge);
     this.physics.add.overlap(game.player, game.exits, exit, null, this);
+    this.physics.add.overlap(game.player, game.bushes, onBush);
 
     game.running = false;
     this.scene.pause();
@@ -166,6 +167,9 @@ function update() {
     }
     if (game.state.currentEdge && !this.physics.overlap(game.player, game.state.currentEdge)) {
         game.state.currentEdge = null;
+    }
+    if (game.state.currentBush && !this.physics.overlap(game.player, game.state.currentBush)) {
+        game.state.currentBush = null;
     }
 }
 
@@ -197,10 +201,19 @@ function exit(player, exit) {
     }
 }
 
+function onBush(player, bush) {
+    const grounded = bush.getData('grounded');
+    if (game.state.currentBush !== bush && (!grounded || player.body.onFloor())) {
+        game.events.onBush();
+    }
+    game.state.currentBush = bush;
+}
+
 function clearEvents() {
     game.events = {
         onCoin: () => {},
         onEdge: () => {},
+        onBush: () => {},
     }
 }
 
