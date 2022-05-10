@@ -1,6 +1,6 @@
 import {TILE_EMPTY} from "./constants.js";
 
-export function setToOverwrite(editor) {
+export function setToOverwrite(editor, parseData = (x) => x) {
     const width = editor.cols;
     const height = editor.rows;
     document.addEventListener('selectionchange', (event) => {
@@ -51,6 +51,17 @@ export function setToOverwrite(editor) {
         if (arrow) {
             event.preventDefault();
             editor.setSelectionRange(start, start + 1);
+        }
+    });
+    editor.addEventListener('copy', (event) => {
+        event.preventDefault();
+        event.clipboardData.setData('text/plain', editor.value);
+    });
+    editor.addEventListener('paste', (event) => {
+        event.preventDefault();
+        const data = event.clipboardData.getData('text/plain');
+        if (data !== '') {
+            editor.value = parseData(data);
         }
     });
 }
