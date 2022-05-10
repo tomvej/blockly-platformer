@@ -58,10 +58,10 @@ game.control = {
         if (game.running && game.player.body.onFloor()) {
             switch (type) {
                 case 'LONG':
-                    game.player.setVelocity(game.direction * 240, -120);
+                    game.player.setVelocity(game.direction * 160, -120);
                     break;
                 case 'HIGH':
-                    game.player.setVelocity(game.direction * 80, -320);
+                    game.player.setVelocity(game.direction * 60, -260);
                     break;
             }
         }
