@@ -25,26 +25,26 @@ const game = {
     get direction() {
         return game.player.flipX ? -1 : 1;
     },
-};
-
-game.game = new Phaser.Game({
-    type: Phaser.AUTO,
-    parent: document.getElementById('game'),
-    width: width,
-    height: height,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: {y: 300},
-            debug: false,
+    state: {},
+    game: new Phaser.Game({
+        type: Phaser.AUTO,
+        parent: document.getElementById('game'),
+        width: width,
+        height: height,
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: {y: 300},
+                debug: false,
+            }
+        },
+        scene: {
+            preload,
+            create,
+            update,
         }
-    },
-    scene: {
-        preload,
-        create,
-        update,
-    }
-});
+    }),
+}
 
 function preload() {
     this.load.image('background', 'images/blue_grass.png');
@@ -159,8 +159,8 @@ function update() {
     } else {
         game.player.anims.play('playerJump', true);
     }
-    if (game.currentEdge && !this.physics.overlap(game.player, game.currentEdge)) {
-        game.currentEdge = null;
+    if (game.state.currentEdge && !this.physics.overlap(game.player, game.state.currentEdge)) {
+        game.state.currentEdge = null;
     }
 }
 
@@ -176,10 +176,10 @@ function onEdge(player, edge) {
     const type = edge.getData('type');
     const touching = player.body.touching;
 
-    if (player.body.onFloor() && game.currentEdge !== edge && ((type === 'left' && touching.left) || (type === 'right' && touching.right))) {
+    if (player.body.onFloor() && game.state.currentEdge !== edge && ((type === 'left' && touching.left) || (type === 'right' && touching.right))) {
         game.events.onEdge();
     }
-    game.currentEdge = edge;
+    game.state.currentEdge = edge;
 }
 
 function exit(player, exit) {
