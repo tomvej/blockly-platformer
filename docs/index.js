@@ -120,7 +120,7 @@ function create() {
         const y = y2 + TILE_SIZE / 2;
         switch (entity.type) {
             case 'platform':
-                scale(game.platforms.create(x, y, 'sprites', `grass${entity.connection}`))
+                scale(game.platforms.create(x, y, 'sprites', `${entity.kind}${entity.connection}`)).setData('kind', entity.kind);
                 !entity.left && createEdge(x - TILE_SIZE / 2, y, 'left');
                 !entity.right && createEdge(x + TILE_SIZE / 2, y, 'right');
                 break;

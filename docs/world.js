@@ -5,7 +5,7 @@ import {
     TILE_EMPTY,
     TILE_EXIT,
     TILE_GRASS,
-    TILE_PLAYER,
+    TILE_PLAYER, TILE_SAND,
     WORLD_HEIGHT,
     WORLD_WIDTH
 } from "./constants.js";
@@ -64,10 +64,15 @@ export function parseWorld(worldString) {
     let hasPlayer = false;
     for (let x = 0; x <= WORLD_WIDTH; x++) {
         for (let y = 0; y <= WORLD_HEIGHT; y++) {
-            if (TILE_GRASS === tile(x,y)) {
+            if (GROUND_TILES.includes(tile(x,y))) {
                 if (GROUND_TILES.includes(tile(x,y-1)) || GROUND_TILES.includes(tile(x,y-2))) {
                     console.warn(`Platform on [${x},${y}] has another platform too close above it. There must be at least two spaces above a platform in order for the player to fit.`);
                 }
+
+                const kind = {
+                    [TILE_GRASS]: 'grass',
+                    [TILE_SAND]: 'sand',
+                }[tile(x, y)];
 
                 const left = GROUND_TILES.includes(tile(x-1,y));
                 const right = GROUND_TILES.includes(tile(x+1,y));
@@ -79,7 +84,7 @@ export function parseWorld(worldString) {
                 } else if (right) {
                     connection = 'Left';
                 }
-                entities.push({type: 'platform', x, y, connection, left, right});
+                entities.push({type: 'platform', x, y, connection, left, right, kind});
             } else if (TILE_COIN === tile(x,y)) {
                 const grounded = GROUND_TILES.includes(tile(x,y+1));
                 entities.push({type: 'coin', x, y, grounded});
