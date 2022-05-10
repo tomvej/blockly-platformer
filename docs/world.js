@@ -1,10 +1,6 @@
-import {WORLD_HEIGHT, WORLD_WIDTH} from "./constants.js";
+import {TILE_COIN, TILE_EMPTY, TILE_EXIT, TILE_GROUND, TILE_PLAYER, WORLD_HEIGHT, WORLD_WIDTH} from "./constants.js";
 
-const TILE_EMPTY = ' ';
-const TILE_GROUND = '=';
-const TILE_COIN = 'o';
-const TILE_EXIT = '@';
-const TILE_PLAYER = '&';
+
 
 export const defaultWorld = `${`${TILE_EMPTY.repeat(20)}\n`.repeat(15)}${TILE_GROUND.repeat(20)}`
 

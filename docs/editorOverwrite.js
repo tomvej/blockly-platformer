@@ -1,3 +1,5 @@
+import {TILE_EMPTY} from "./constants.js";
+
 export function setToOverwrite(editor) {
     const width = editor.cols;
     const height = editor.rows;
@@ -40,7 +42,7 @@ export function setToOverwrite(editor) {
                     start -= 1;
                 }
             case 'Delete':
-                editor.value = `${editor.value.substring(0, start)} ${editor.value.substring(start + 1)}`;
+                editor.value = `${editor.value.substring(0, start)}${TILE_EMPTY}${editor.value.substring(start + 1)}`;
                 break;
             default:
                 arrow = false;
