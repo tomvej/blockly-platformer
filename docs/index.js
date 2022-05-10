@@ -202,10 +202,12 @@ function exit(player, exit) {
 
 function onBush(player, bush) {
     const grounded = bush.getData('grounded');
-    if (game.state.currentBush !== bush && (!grounded || player.body.onFloor())) {
-        game.events.onBush();
+    if (!grounded || player.body.onFloor()) {
+        if (game.state.currentBush !== bush) {
+            game.events.onBush();
+        }
+        game.state.currentBush = bush;
     }
-    game.state.currentBush = bush;
 }
 
 function clearEvents() {
