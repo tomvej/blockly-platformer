@@ -42,6 +42,7 @@ export function setToOverwrite(editor, parseData = (x) => x) {
                     start -= 1;
                 }
             case 'Delete':
+            case 'Space':
                 editor.value = `${editor.value.substring(0, start)}${TILE_EMPTY}${editor.value.substring(start + 1)}`;
                 break;
             default:
