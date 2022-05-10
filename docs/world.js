@@ -104,3 +104,23 @@ export function parseWorld(worldString) {
     console.groupEnd();
     return entities;
 }
+
+export function fixWorldInput(worldString) {
+    console.group('World input');
+    const rows = worldString.split('\n');
+    checkWorldSize(rows);
+    const getTile = createGetTile(rows);
+    printWorld(getTile);
+
+    const output = [];
+    for (let y = 0; y < WORLD_HEIGHT; y++) {
+        let row = '';
+        for (let x = 0; x < WORLD_WIDTH; x++) {
+            row += getTile(x, y);
+        }
+        output.push(row);
+    }
+
+    console.groupEnd();
+    return output.join('\n');
+}

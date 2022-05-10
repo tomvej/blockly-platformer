@@ -1,6 +1,6 @@
 import {maxInstancesMap, toolbox} from './blocks.js';
 import {PLAYER_HEIGHT, SCALE, TILE_SIZE, WORLD_HEIGHT, WORLD_WIDTH} from './constants.js';
-import {defaultWorld, parseWorld} from './world.js';
+import {defaultWorld, fixWorldInput, parseWorld} from './world.js';
 import {setToOverwrite} from "./editorOverwrite.js";
 
 const worldEditor = document.getElementById('world-editor');
@@ -16,7 +16,7 @@ document.getElementById('regenerate').addEventListener('click', () => {
 document.getElementById('clear').addEventListener('click', () => {
     worldEditor.value = defaultWorld;
 });
-setToOverwrite(worldEditor);
+setToOverwrite(worldEditor, fixWorldInput);
 
 const width = WORLD_WIDTH * TILE_SIZE;
 const height = WORLD_HEIGHT * TILE_SIZE;
