@@ -5,7 +5,7 @@ import {
     TILE_EMPTY,
     TILE_EXIT,
     TILE_GRASS,
-    TILE_PLAYER, TILE_SAND,
+    TILE_PLAYER, TILE_STONE, TILE_SAND,
     WORLD_HEIGHT,
     WORLD_WIDTH
 } from "./constants.js";
@@ -72,6 +72,7 @@ export function parseWorld(worldString) {
                 const kind = {
                     [TILE_GRASS]: 'grass',
                     [TILE_SAND]: 'sand',
+                    [TILE_STONE]: 'stone',
                 }[tile(x, y)];
 
                 const left = GROUND_TILES.includes(tile(x-1,y));
