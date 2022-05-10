@@ -16,6 +16,17 @@ document.getElementById('regenerate').addEventListener('click', () => {
 document.getElementById('clear').addEventListener('click', () => {
     worldEditor.value = defaultWorld;
 });
+worldEditor.addEventListener('paste', (event) => {
+    event.preventDefault();
+    const data = event.clipboardData.getData('text/plain');
+    if (data !== '') {
+        worldEditor.value = data;
+    }
+});
+worldEditor.addEventListener('copy', (event) => {
+    event.preventDefault();
+    event.clipboardData.setData('text/plain', worldEditor.value);
+});
 setToOverwrite(worldEditor);
 
 const width = WORLD_WIDTH * TILE_SIZE;

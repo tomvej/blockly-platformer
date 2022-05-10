@@ -52,8 +52,6 @@ export function parseWorld(worldString) {
     checkWorldSize(rows);
     const tile = createGetTile(rows);
 
-    printWorld(tile);
-
     const entities = [];
     let hasPlayer = false;
     for (let x = 0; x <= WORLD_WIDTH; x++) {
