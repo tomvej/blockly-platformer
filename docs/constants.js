@@ -5,8 +5,10 @@ export const SCALE = 0.25;
 export const PLAYER_HEIGHT = 164;
 
 export const TILE_EMPTY = '.';
-export const TILE_GROUND = '=';
+export const TILE_GRASS = '=';
 export const TILE_COIN = 'o';
 export const TILE_EXIT = '@';
 export const TILE_PLAYER = '&';
 export const TILE_BUSH = '$';
+
+export const GROUND_TILES = [TILE_GRASS];

@@ -1,17 +1,16 @@
 import {
+    GROUND_TILES,
     TILE_BUSH,
     TILE_COIN,
     TILE_EMPTY,
     TILE_EXIT,
-    TILE_GROUND,
+    TILE_GRASS,
     TILE_PLAYER,
     WORLD_HEIGHT,
     WORLD_WIDTH
 } from "./constants.js";
 
-
-
-export const defaultWorld = `${`${TILE_EMPTY.repeat(20)}\n`.repeat(15)}${TILE_GROUND.repeat(20)}`
+export const defaultWorld = `${`${TILE_EMPTY.repeat(20)}\n`.repeat(15)}${TILE_GRASS.repeat(20)}`
 
 function checkWorldSize(rows) {
     if (rows.length < WORLD_HEIGHT) {
@@ -65,13 +64,13 @@ export function parseWorld(worldString) {
     let hasPlayer = false;
     for (let x = 0; x <= WORLD_WIDTH; x++) {
         for (let y = 0; y <= WORLD_HEIGHT; y++) {
-            if (TILE_GROUND === tile(x,y)) {
-                if (tile(x,y-1) === TILE_GROUND || tile(x,y-2) === TILE_GROUND) {
+            if (TILE_GRASS === tile(x,y)) {
+                if (GROUND_TILES.includes(tile(x,y-1)) || GROUND_TILES.includes(tile(x,y-2))) {
                     console.warn(`Platform on [${x},${y}] has another platform too close above it. There must be at least two spaces above a platform in order for the player to fit.`);
                 }
 
-                const left = !tile(x-1,y) || tile(x-1,y) === TILE_GROUND;
-                const right = !tile(x+1,y) || tile(x+1,y) === TILE_GROUND;
+                const left = !tile(x-1,y) || GROUND_TILES.includes(tile(x-1,y));
+                const right = !tile(x+1,y) || GROUND_TILES.includes(tile(x+1,y));
                 let connection = '';
                 if (left && right) {
                     connection = 'Mid';
@@ -82,7 +81,7 @@ export function parseWorld(worldString) {
                 }
                 entities.push({type: 'platform', x, y, connection, left, right});
             } else if (TILE_COIN === tile(x,y)) {
-                const grounded = !tile(x,y+1) || tile(x,y+1) === TILE_GROUND;
+                const grounded = !tile(x,y+1) || GROUND_TILES.includes(tile(x,y+1));
                 entities.push({type: 'coin', x, y, grounded});
             } else if (TILE_EXIT === tile(x,y)) {
                 if (tile(x,y-1) && tile(x,y-1) !== TILE_EMPTY) {
@@ -103,7 +102,7 @@ export function parseWorld(worldString) {
                     entities.push({type: 'player', x, y});
                 }
             } else if (TILE_BUSH === tile(x, y)) {
-                const grounded = !tile(x,y+1) || tile(x,y+1) === TILE_GROUND;
+                const grounded = !tile(x,y+1) || GROUND_TILES.includes(tile(x,y+1));
                 entities.push({type: 'bush', x, y, grounded});
             }
         }
