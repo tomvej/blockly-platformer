@@ -30,7 +30,7 @@ function checkWorldSize(rows) {
 
 const createGetTile = (rows) => function tile(x, y) {
     if (x < 0 || x >= WORLD_WIDTH || y < 0 || y >= WORLD_HEIGHT) {
-        return undefined
+        return TILE_EMPTY;
     } else {
         const rowNumber = rows.length - (WORLD_HEIGHT - y);
         if (rowNumber < 0 || x >= rows[rowNumber].length) {
@@ -69,8 +69,8 @@ export function parseWorld(worldString) {
                     console.warn(`Platform on [${x},${y}] has another platform too close above it. There must be at least two spaces above a platform in order for the player to fit.`);
                 }
 
-                const left = !tile(x-1,y) || GROUND_TILES.includes(tile(x-1,y));
-                const right = !tile(x+1,y) || GROUND_TILES.includes(tile(x+1,y));
+                const left = GROUND_TILES.includes(tile(x-1,y));
+                const right = GROUND_TILES.includes(tile(x+1,y));
                 let connection = '';
                 if (left && right) {
                     connection = 'Mid';
@@ -81,17 +81,17 @@ export function parseWorld(worldString) {
                 }
                 entities.push({type: 'platform', x, y, connection, left, right});
             } else if (TILE_COIN === tile(x,y)) {
-                const grounded = !tile(x,y+1) || GROUND_TILES.includes(tile(x,y+1));
+                const grounded = GROUND_TILES.includes(tile(x,y+1));
                 entities.push({type: 'coin', x, y, grounded});
             } else if (TILE_EXIT === tile(x,y)) {
-                if (tile(x,y-1) && tile(x,y-1) !== TILE_EMPTY) {
+                if (tile(x,y-1) !== TILE_EMPTY) {
                     console.error(`Exit on [${x},${y}] has another object directly above it! Exit is always two spaces high.`);
                     entities.push({type: 'error', x, y});
                 } else {
                     entities.push({type: 'exit', x, y});
                 }
             } else if (TILE_PLAYER === tile(x,y)) {
-                if (tile(x,y-1) && tile(x,y-1) !== TILE_EMPTY) {
+                if (tile(x,y-1) !== TILE_EMPTY) {
                     console.error(`Player on [${x},${y}] has another object directly above it! Player is always two spaces high.`);
                     entities.push({type: 'error', x, y});
                 } else if (hasPlayer) {
@@ -102,7 +102,7 @@ export function parseWorld(worldString) {
                     entities.push({type: 'player', x, y});
                 }
             } else if (TILE_BUSH === tile(x, y)) {
-                const grounded = !tile(x,y+1) || GROUND_TILES.includes(tile(x,y+1));
+                const grounded = GROUND_TILES.includes(tile(x,y+1));
                 entities.push({type: 'bush', x, y, grounded});
             }
         }

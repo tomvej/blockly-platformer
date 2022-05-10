@@ -144,7 +144,6 @@ function create() {
     });
 
     game.player.setDepth(1);
-    game.player.setCollideWorldBounds(true);
     this.physics.add.collider(game.platforms, game.player, onGround);
     this.physics.add.overlap(game.player, game.coins, onCoin);
     this.physics.add.overlap(game.player, game.edges, onEdge);
