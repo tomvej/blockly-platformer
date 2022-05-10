@@ -164,11 +164,11 @@ function update() {
     } else {
         game.player.anims.play('playerJump', true);
     }
-    if (game.state.currentEdge && !this.physics.overlap(game.player, game.state.currentEdge)) {
-        game.state.currentEdge = null;
+    if (game.state.edge && !this.physics.overlap(game.player, game.state.edge)) {
+        game.state.edge = null;
     }
-    if (game.state.currentBush && !this.physics.overlap(game.player, game.state.currentBush)) {
-        game.state.currentBush = null;
+    if (game.state.bush && !this.physics.overlap(game.player, game.state.bush)) {
+        game.state.bush = null;
     }
 }
 
@@ -184,10 +184,10 @@ function onEdge(player, edge) {
     const type = edge.getData('type');
     const touching = player.body.touching;
 
-    if (player.body.onFloor() && game.state.currentEdge !== edge && ((type === 'left' && touching.left) || (type === 'right' && touching.right))) {
+    if (player.body.onFloor() && game.state.edge !== edge && ((type === 'left' && touching.left) || (type === 'right' && touching.right))) {
         game.events.onEdge();
     }
-    game.state.currentEdge = edge;
+    game.state.edge = edge;
 }
 
 function exit(player, exit) {
@@ -203,10 +203,10 @@ function exit(player, exit) {
 function onBush(player, bush) {
     const grounded = bush.getData('grounded');
     if (!grounded || player.body.onFloor()) {
-        if (game.state.currentBush !== bush) {
+        if (game.state.bush !== bush) {
             game.events.onBush();
         }
-        game.state.currentBush = bush;
+        game.state.bush = bush;
     }
 }
 
