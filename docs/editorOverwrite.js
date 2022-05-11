@@ -6,8 +6,8 @@ export function setToOverwrite(editor, parseData = (x) => x) {
     function removeAtPosition(position) {
         editor.value = `${editor.value.substring(0, position)}${TILE_EMPTY}${editor.value.substring(position + 1)}`;
     }
-    document.addEventListener('selectionchange', (event) => {
-        if (event.target === editor) {
+    document.addEventListener('selectionchange', () => {
+        if (document.activeElement === editor) {
             const start = editor.selectionStart;
             if (start % (width + 1) < width) {
                 editor.setSelectionRange(start, start + 1);
