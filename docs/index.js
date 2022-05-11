@@ -26,7 +26,9 @@ const game = {
     get direction() {
         return game.player.flipX ? -1 : 1;
     },
-    state: {},
+    state: {
+        starting: true,
+    },
     game: new Phaser.Game({
         type: Phaser.AUTO,
         parent: document.getElementById('game'),
@@ -177,9 +179,15 @@ function onGround(player, ground) {
 function update() {
     if (game.player.body.onFloor()) {
         game.player.anims.play('playerWalk', true);
+        if (!game.state.onFloor && !game.state.starting) {
+            game.events.onLanding();
+        }
+        game.state.onFloor = true;
+        game.state.starting = false;
     } else {
         game.player.anims.play('playerJump', true);
         game.state.groundType = null;
+        game.state.onFloor = false;
     }
     if (game.state.edge && !this.physics.overlap(game.player, game.state.edge)) {
         game.state.edge = null;
@@ -232,6 +240,7 @@ function clearEvents() {
         onCoin: () => {},
         onEdge: () => {},
         onBush: () => {},
+        onLanding: () => {},
     }
 }
 
