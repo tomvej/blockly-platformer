@@ -64,10 +64,10 @@ game.control = {
         if (game.running && game.player.body.onFloor()) {
             switch (type) {
                 case 'LONG':
-                    game.player.setVelocity(game.direction * TILE_SIZE * 5.65, -TILE_SIZE * 4);
+                    game.player.setVelocity(game.direction * TILE_SIZE * 4.6, -TILE_SIZE * 4);
                     break;
                 case 'HIGH':
-                    game.player.setVelocity(game.direction * TILE_SIZE * 1.7, -TILE_SIZE * 8.5);
+                    game.player.setVelocity(game.direction * TILE_SIZE * 1.2, -TILE_SIZE * 8.5);
                     break;
             }
         }
