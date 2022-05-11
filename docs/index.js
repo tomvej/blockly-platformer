@@ -129,18 +129,29 @@ function create() {
                 !entity.right && createEdge(x + TILE_SIZE / 2, y, 'right');
                 break;
             case 'coin':
-                scale(game.coins.create(x, y, 'sprites', 'coinGold')).setData('grounded', entity.grounded);
+                game.coins.create(x, y, 'sprites', 'coinGold')
+                    .setData('grounded', entity.grounded)
+                    .setScale(SCALE)
+                    .refreshBody()
+                    .body.setSize(10, TILE_SIZE);
                 break;
             case 'player':
                 game.player = this.physics.add.sprite(x, y2, 'sprites', 'alienGreen_front')
-                    .setScale(SCALE).setSize(null, PLAYER_HEIGHT).setOffset(0, -2*TILE_SIZE + PLAYER_HEIGHT).refreshBody();
+                    .setScale(SCALE)
+                    .setSize(null, PLAYER_HEIGHT)
+                    .setOffset(0, -2*TILE_SIZE + PLAYER_HEIGHT)
+                    .refreshBody();
                 break;
             case 'exit':
                 scale(game.exits.create(x, y2, 'sprites', 'doorClosed'));
                 break;
-            case 'bush':
-                scale(game.bushes.create(x, y, 'sprites', 'bush')).setData('grounded', entity.grounded);
-                break;
+            case 'bush': {
+                game.bushes.create(x, y, 'sprites', 'bush')
+                    .setData('grounded', entity.grounded)
+                    .setScale(SCALE)
+                    .refreshBody()
+                    .body.setSize(10, TILE_SIZE);
+            }break;
             case 'error':
                 scale(this.add.image(x, y, 'sprites', 'hudX'));
                 break;
