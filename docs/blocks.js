@@ -85,6 +85,14 @@ Blockly.Blocks.events_landing = defineBlock({
 maxInstancesMap.events_landing = 1;
 Blockly.JavaScript.events_landing = createEventGenerator('onLanding');
 
+Blockly.Blocks.events_click = defineBlock({
+    message0: 'kliknutí',
+    nextStatement: null,
+    colour: COLOUR_EVENTS,
+});
+maxInstancesMap.events_click = 1;
+Blockly.JavaScript.events_click = createEventGenerator('onClick');
+
 Blockly.Blocks.conditions_direction = defineBlock({
     message0: 'jdu %1',
     args0: [{name: 'DIRECTION', type: 'field_dropdown', options: [['doleva', 'LEFT'], ['doprava', 'RIGHT']]}],
@@ -159,6 +167,9 @@ export const toolbox = {
         }, {
             kind: 'block',
             type: 'events_landing',
+        }, {
+            kind: 'block',
+            type: 'events_click',
         }],
     }, {
         kind: 'category',

@@ -179,6 +179,8 @@ function create() {
     this.physics.add.overlap(game.player, game.exits, exit, null, this);
     this.physics.add.overlap(game.player, game.bushes, onBush);
 
+    this.input.on('pointerdown', () => game.events.onClick());
+
     game.running = false;
     this.scene.pause();
 }
@@ -253,6 +255,7 @@ function clearEvents() {
         onEdge: () => {},
         onBush: () => {},
         onLanding: () => {},
+        onClick: () => {},
     }
 }
 
