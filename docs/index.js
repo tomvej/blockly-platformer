@@ -16,6 +16,9 @@ document.getElementById('regenerate').addEventListener('click', () => {
 document.getElementById('clear').addEventListener('click', () => {
     worldEditor.value = defaultWorld;
 });
+document.getElementById('repair').addEventListener('click', () => {
+    worldEditor.value = fixWorldInput(worldEditor.value);
+});
 setToOverwrite(worldEditor, fixWorldInput);
 
 const width = WORLD_WIDTH * TILE_SIZE;
