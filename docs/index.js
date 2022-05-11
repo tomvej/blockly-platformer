@@ -37,7 +37,7 @@ const game = {
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: {y: 300},
+                gravity: {y: 10 * TILE_SIZE},
                 debug: true,
             }
         },
@@ -64,10 +64,10 @@ game.control = {
         if (game.running && game.player.body.onFloor()) {
             switch (type) {
                 case 'LONG':
-                    game.player.setVelocity(game.direction * 160, -120);
+                    game.player.setVelocity(game.direction * TILE_SIZE * 5.65, -TILE_SIZE * 4);
                     break;
                 case 'HIGH':
-                    game.player.setVelocity(game.direction * 60, -260);
+                    game.player.setVelocity(game.direction * TILE_SIZE * 1.7, -TILE_SIZE * 8.5);
                     break;
             }
         }
@@ -126,7 +126,7 @@ function create() {
     game.bushes = this.physics.add.staticGroup();
 
     const createEdge = (x, y, type) => {
-        const edge = this.add.rectangle(x, y-TILE_SIZE, 10, TILE_SIZE);
+        const edge = this.add.rectangle(x, y-TILE_SIZE, TILE_SIZE/3, TILE_SIZE);
         edge.setData('type', type);
         game.edges.add(edge);
     }
@@ -147,7 +147,7 @@ function create() {
                     .setData('grounded', entity.grounded)
                     .setScale(SCALE)
                     .refreshBody()
-                    .body.setSize(10, TILE_SIZE);
+                    .body.setSize(TILE_SIZE/3, TILE_SIZE);
                 break;
             case 'player':
                 game.player = this.physics.add.sprite(x, y2, 'sprites', 'alienGreen_front')
@@ -164,7 +164,7 @@ function create() {
                     .setData('grounded', entity.grounded)
                     .setScale(SCALE)
                     .refreshBody()
-                    .body.setSize(10, TILE_SIZE);
+                    .body.setSize(TILE_SIZE/3, TILE_SIZE);
             }break;
             case 'error':
                 scale(this.add.image(x, y, 'sprites', 'hudX'));
@@ -186,7 +186,7 @@ function create() {
 }
 
 function onGround(player, ground) {
-    game.player.setVelocityX(game.direction * 160);
+    game.player.setVelocityX(game.direction * 128);
     game.state.groundType = ground.getData('kind');
 }
 
