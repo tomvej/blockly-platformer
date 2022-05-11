@@ -6,11 +6,9 @@ import {setToOverwrite} from "./editorOverwrite.js";
 const worldEditor = document.getElementById('world-editor');
 let world = localStorage.getItem('editorValue') ?? defaultWorld;
 worldEditor.value = world;
-worldEditor.addEventListener('change', () => {
-    localStorage.setItem('editorValue', worldEditor.value);
-})
 document.getElementById('regenerate').addEventListener('click', () => {
     world = worldEditor.value;
+    localStorage.setItem('editorValue', worldEditor.value);
     game.game.scene.start('default');
 })
 document.getElementById('clear').addEventListener('click', () => {
