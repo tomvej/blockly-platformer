@@ -41,6 +41,18 @@ const createEventGenerator = (eventName) => function (block) {
     }
 }
 
+Blockly.Blocks.actions_log = defineBlock({
+    message0: 'vypiš %1',
+    args0: [{name: 'TEXT', type: 'field_input'}],
+    previousStatement: null,
+    nextStatement: null,
+    colour: 0,
+});
+Blockly.JavaScript.actions_log = function(block) {
+    const value = block.getFieldValue('TEXT');
+    return `game.control.log('${value.replaceAll('\'', '"')}');\n`;
+}
+
 Blockly.Blocks.events_edge = defineBlock({
     message0: 'hrana',
     nextStatement: null,
@@ -127,6 +139,9 @@ export const toolbox = {
             fields: {
                 TYPE: 'LONG',
             },
+        }, {
+            kind: 'block',
+            type: 'actions_log',
         }]
     }, {
         kind: 'category',

@@ -47,6 +47,9 @@ const game = {
             update,
         }
     }),
+    get scene() {
+        return game.game.scene.getScene('default');
+    }
 }
 
 function preload() {
@@ -85,10 +88,19 @@ game.control = {
     isOnGround(groundType) {
         return game.state.groundType === groundType;
     },
+    log(string) {
+        if (game.running) {
+            game.alert.setText(string);
+            console.log('USER', string);
+            game.hideAlert && game.scene.time.removeEvent(game.hideAlert);
+            game.hideAlert = game.scene.time.delayedCall(1000, () => game.alert.setText(''));
+        }
+    }
 }
 
 function create() {
     this.add.image(width / 2, height / 2, 'background').setDisplaySize(width, height);
+    game.alert = this.add.text(16, 16, '', {fontSize: `${TILE_SIZE}px`, fill: '#FF0000'});
 
     this.anims.create({
         key: 'playerWalk',
