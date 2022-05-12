@@ -109,10 +109,10 @@ export function parseWorld(worldString) {
                 }
             } else if (TILE_BUSH === tile(x, y)) {
                 const grounded = GROUND_TILES.includes(tile(x,y+1));
-                entities.push({type: 'bush', x, y, grounded});
+                entities.push({type: 'marker', kind: 'bush', x, y, grounded});
             } else if (TILE_CACTUS === tile(x, y)) {
                 const grounded = GROUND_TILES.includes(tile(x,y+1));
-                entities.push({type: 'cactus', x, y, grounded});
+                entities.push({type: 'marker', kind: 'cactus', x, y, grounded});
             }
         }
     }

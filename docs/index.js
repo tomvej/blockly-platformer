@@ -162,18 +162,10 @@ function create() {
                     .setSize(TILE_SIZE, DOOR_HEIGHT*SCALE)
                     .setOffset(0, 2*TILE_SIZE - DOOR_HEIGHT*SCALE);
                 break;
-            case 'bush':
-                game.markers.create(x, y, 'sprites', 'bush')
+            case 'marker':
+                game.markers.create(x, y, 'sprites', entity.kind)
                     .setData('grounded', entity.grounded)
-                    .setData('type', 'bush')
-                    .setScale(SCALE)
-                    .refreshBody()
-                    .setSize(TILE_SIZE/3, TILE_SIZE);
-                break;
-            case 'cactus':
-                game.markers.create(x, y, 'sprites', 'cactus')
-                    .setData('grounded', entity.grounded)
-                    .setData('type', 'cactus')
+                    .setData('type', entity.kind)
                     .setScale(SCALE)
                     .refreshBody()
                     .setSize(TILE_SIZE/3, TILE_SIZE);
