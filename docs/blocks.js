@@ -114,12 +114,12 @@ Blockly.JavaScript.conditions_direction = function(block) {
 
 Blockly.Blocks.conditions_ground = defineBlock({
     message0: 'jsem na %1',
-    args0: [{name: 'KIND', type: 'field_dropdown', options: [['trávě', 'grass'], ['písku', 'sand'], ['skále', 'stone']]}],
+    args0: [{name: 'TYPE', type: 'field_dropdown', options: [['trávě', 'grass'], ['písku', 'sand'], ['skále', 'stone']]}],
     output: 'Boolean',
     colour: COLOUR_LOGIC,
 });
 Blockly.JavaScript.conditions_ground = function(block) {
-    const groundType = block.getFieldValue('KIND');
+    const groundType = block.getFieldValue('TYPE');
     return [`game.control.isOnGround('${groundType}')`, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 }
 

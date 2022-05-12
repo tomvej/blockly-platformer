@@ -69,7 +69,7 @@ export function parseWorld(worldString) {
                     console.warn(`Platform on [${x},${y}] has another platform too close above it. There must be at least two spaces above a platform in order for the player to fit.`);
                 }
 
-                const kind = {
+                const type = {
                     [TILE_GRASS]: 'grass',
                     [TILE_SAND]: 'sand',
                     [TILE_STONE]: 'stone',
@@ -85,34 +85,34 @@ export function parseWorld(worldString) {
                 } else if (right) {
                     connection = 'Left';
                 }
-                entities.push({type: 'platform', x, y, connection, left, right, kind});
+                entities.push({kind: 'platform', x, y, connection, left, right, type});
             } else if (TILE_COIN === tile(x,y)) {
                 const grounded = GROUND_TILES.includes(tile(x,y+1));
-                entities.push({type: 'coin', x, y, grounded});
+                entities.push({kind: 'coin', x, y, grounded});
             } else if (TILE_EXIT === tile(x,y)) {
                 if (tile(x,y-1) !== TILE_EMPTY) {
                     console.error(`Exit on [${x},${y}] has another object directly above it! Exit is always two spaces high.`);
-                    entities.push({type: 'error', x, y});
+                    entities.push({kind: 'error', x, y});
                 } else {
-                    entities.push({type: 'exit', x, y});
+                    entities.push({kind: 'exit', x, y});
                 }
             } else if (TILE_PLAYER === tile(x,y)) {
                 if (tile(x,y-1) !== TILE_EMPTY) {
                     console.error(`Player on [${x},${y}] has another object directly above it! Player is always two spaces high.`);
-                    entities.push({type: 'error', x, y});
+                    entities.push({kind: 'error', x, y});
                 } else if (hasPlayer) {
                     console.error(`There can be only one player! Extra player on [${x},${y}].`)
-                    entities.push({type: 'error', x, y});
+                    entities.push({kind: 'error', x, y});
                 } else {
                     hasPlayer = true;
-                    entities.push({type: 'player', x, y});
+                    entities.push({kind: 'player', x, y});
                 }
             } else if (TILE_BUSH === tile(x, y)) {
                 const grounded = GROUND_TILES.includes(tile(x,y+1));
-                entities.push({type: 'marker', kind: 'bush', x, y, grounded});
+                entities.push({kind: 'marker', type: 'bush', x, y, grounded});
             } else if (TILE_CACTUS === tile(x, y)) {
                 const grounded = GROUND_TILES.includes(tile(x,y+1));
-                entities.push({type: 'marker', kind: 'cactus', x, y, grounded});
+                entities.push({kind: 'marker', type: 'cactus', x, y, grounded});
             }
         }
     }

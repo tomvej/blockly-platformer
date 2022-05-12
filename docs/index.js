@@ -136,9 +136,9 @@ function create() {
         const x = entity.x * TILE_SIZE + TILE_SIZE / 2;
         const y2 = entity.y * TILE_SIZE;
         const y = y2 + TILE_SIZE / 2;
-        switch (entity.type) {
+        switch (entity.kind) {
             case 'platform':
-                scale(game.platforms.create(x, y, 'sprites', `${entity.kind}${entity.connection}`)).setData('kind', entity.kind);
+                scale(game.platforms.create(x, y, 'sprites', `${entity.type}${entity.connection}`)).setData('type', entity.type);
                 !entity.left && createEdge(x - TILE_SIZE / 2, y, 'left');
                 !entity.right && createEdge(x + TILE_SIZE / 2, y, 'right');
                 break;
@@ -163,9 +163,9 @@ function create() {
                     .setOffset(0, 2*TILE_SIZE - DOOR_HEIGHT*SCALE);
                 break;
             case 'marker':
-                game.markers.create(x, y, 'sprites', entity.kind)
+                game.markers.create(x, y, 'sprites', entity.type)
                     .setData('grounded', entity.grounded)
-                    .setData('type', entity.kind)
+                    .setData('type', entity.type)
                     .setScale(SCALE)
                     .refreshBody()
                     .setSize(TILE_SIZE/3, TILE_SIZE);
@@ -193,7 +193,7 @@ function create() {
 function onGround(player, ground) {
     if (game.player.body.onFloor()) {
         game.player.setVelocityX(game.direction * 4 * TILE_SIZE);
-        game.state.groundType = ground.getData('kind');
+        game.state.groundType = ground.getData('type');
     }
 }
 
