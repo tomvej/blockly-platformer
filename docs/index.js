@@ -318,3 +318,13 @@ document.getElementById('start').addEventListener('click', () => {
 document.getElementById('reset').addEventListener('click', () => {
     game.game.scene.start('default');
 });
+
+const blocklyEditor = document.getElementById('blockly-editor');
+document.getElementById('blockly-export').addEventListener('click', () => {
+    const code = Blockly.serialization.workspaces.save(workspace);
+    blocklyEditor.value = JSON.stringify(code);
+});
+document.getElementById('blockly-import').addEventListener('click', () => {
+    const code = JSON.parse(blocklyEditor.value);
+    Blockly.serialization.workspaces.load(code, workspace)
+});
