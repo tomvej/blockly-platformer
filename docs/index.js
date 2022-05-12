@@ -124,6 +124,7 @@ function create() {
     game.coins = this.physics.add.staticGroup();
     game.exits = this.physics.add.staticGroup();
     game.bushes = this.physics.add.staticGroup();
+    game.cacti = this.physics.add.staticGroup();
 
     const createEdge = (x, y, type) => {
         const edge = this.add.rectangle(x, y-TILE_SIZE, TILE_SIZE/3, TILE_SIZE);
@@ -164,6 +165,13 @@ function create() {
                 break;
             case 'bush':
                 game.bushes.create(x, y, 'sprites', 'bush')
+                    .setData('grounded', entity.grounded)
+                    .setScale(SCALE)
+                    .refreshBody()
+                    .setSize(TILE_SIZE/3, TILE_SIZE);
+                break;
+            case 'cactus':
+                game.cacti.create(x, y, 'sprites', 'cactus')
                     .setData('grounded', entity.grounded)
                     .setScale(SCALE)
                     .refreshBody()

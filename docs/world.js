@@ -7,7 +7,7 @@ import {
     TILE_GRASS,
     TILE_PLAYER, TILE_STONE, TILE_SAND,
     WORLD_HEIGHT,
-    WORLD_WIDTH
+    WORLD_WIDTH, TILE_CACTUS
 } from "./constants.js";
 
 export const defaultWorld = `${`${TILE_EMPTY.repeat(20)}\n`.repeat(15)}${TILE_GRASS.repeat(20)}`
@@ -110,6 +110,9 @@ export function parseWorld(worldString) {
             } else if (TILE_BUSH === tile(x, y)) {
                 const grounded = GROUND_TILES.includes(tile(x,y+1));
                 entities.push({type: 'bush', x, y, grounded});
+            } else if (TILE_CACTUS === tile(x, y)) {
+                const grounded = GROUND_TILES.includes(tile(x,y+1));
+                entities.push({type: 'cactus', x, y, grounded});
             }
         }
     }
