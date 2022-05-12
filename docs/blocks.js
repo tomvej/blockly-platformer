@@ -77,6 +77,14 @@ Blockly.Blocks.events_bush = defineBlock({
 maxInstancesMap.events_bush = 1;
 Blockly.JavaScript.events_bush = createEventGenerator('onBush');
 
+Blockly.Blocks.events_cactus = defineBlock({
+    message0: 'kaktus',
+    nextStatement: null,
+    colour: COLOUR_EVENTS,
+});
+maxInstancesMap.events_cactus = 1
+Blockly.JavaScript.events_cactus = createEventGenerator('onCactus');
+
 Blockly.Blocks.events_landing = defineBlock({
     message0: 'dopad',
     nextStatement: null,
@@ -164,6 +172,9 @@ export const toolbox = {
         }, {
             kind: 'block',
             type: 'events_bush',
+        }, {
+            kind: 'block',
+            type: 'events_cactus',
         }, {
             kind: 'block',
             type: 'events_landing',

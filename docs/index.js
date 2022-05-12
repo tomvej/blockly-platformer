@@ -189,6 +189,7 @@ function create() {
     this.physics.add.overlap(game.player, game.edges, onEdge);
     this.physics.add.overlap(game.player, game.exits, exit, null, this);
     this.physics.add.overlap(game.player, game.bushes, onBush);
+    this.physics.add.overlap(game.player, game.cacti, onCactus);
 
     this.input.on('pointerdown', () => game.events.onClick());
 
@@ -219,6 +220,9 @@ function update() {
     }
     if (game.state.bush && !this.physics.overlap(game.player, game.state.bush)) {
         game.state.bush = null;
+    }
+    if (game.state.cactus && !this.physics.overlap(game.player, game.state.cactus)) {
+        game.state.cactus = null;
     }
 }
 
@@ -260,6 +264,16 @@ function onBush(player, bush) {
     }
 }
 
+function onCactus(player, cactus) {
+    const grounded = cactus.getData('grounded');
+    if (!grounded || player.body.onFloor()) {
+        if (game.state.cactus !== cactus) {
+            game.events.onCactus();
+        }
+        game.state.cactus = cactus;
+    }
+}
+
 function clearEvents() {
     game.events = {
         onCoin: () => {},
@@ -267,6 +281,7 @@ function clearEvents() {
         onBush: () => {},
         onLanding: () => {},
         onClick: () => {},
+        onCactus: () => {},
     }
 }
 
