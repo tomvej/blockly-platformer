@@ -198,8 +198,10 @@ function create() {
 }
 
 function onGround(player, ground) {
-    game.player.setVelocityX(game.direction * 128);
-    game.state.groundType = ground.getData('kind');
+    if (game.player.body.onFloor()) {
+        game.player.setVelocityX(game.direction * 4 * TILE_SIZE);
+        game.state.groundType = ground.getData('kind');
+    }
 }
 
 function update() {
