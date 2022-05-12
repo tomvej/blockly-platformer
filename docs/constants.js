@@ -9,8 +9,8 @@ export const TILE_GRASS = '=';
 export const TILE_SAND = '-';
 export const TILE_STONE = '#'
 export const TILE_COIN = 'o';
-export const TILE_EXIT = '@';
-export const TILE_PLAYER = '&';
-export const TILE_BUSH = '$';
+export const TILE_EXIT = 'e';
+export const TILE_PLAYER = 'a';
+export const TILE_BUSH = 'k';
 
 export const GROUND_TILES = [TILE_GRASS, TILE_SAND, TILE_STONE];
