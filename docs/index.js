@@ -1,5 +1,5 @@
 import {maxInstancesMap, toolbox} from './blocks.js';
-import {PLAYER_HEIGHT, SCALE, TILE_SIZE, WORLD_HEIGHT, WORLD_WIDTH} from './constants.js';
+import {DOOR_HEIGHT, PLAYER_HEIGHT, SCALE, TILE_SIZE, WORLD_HEIGHT, WORLD_WIDTH} from './constants.js';
 import {defaultWorld, fixWorldInput, parseWorld} from './world.js';
 import {setToOverwrite} from "./editorOverwrite.js";
 
@@ -147,25 +147,28 @@ function create() {
                     .setData('grounded', entity.grounded)
                     .setScale(SCALE)
                     .refreshBody()
-                    .body.setSize(TILE_SIZE/3, TILE_SIZE);
+                    .setSize(TILE_SIZE/3, TILE_SIZE);
                 break;
             case 'player':
                 game.player = this.physics.add.sprite(x, y2, 'sprites', 'alienGreen_front')
                     .setScale(SCALE)
                     .setSize(null, PLAYER_HEIGHT)
                     .setOffset(0, -2*TILE_SIZE + PLAYER_HEIGHT)
-                    .refreshBody();
                 break;
             case 'exit':
-                scale(game.exits.create(x, y2, 'sprites', 'doorClosed'));
+                game.exits.create(x, y2, 'sprites', 'doorClosed')
+                    .setScale(SCALE)
+                    .refreshBody()
+                    .setSize(TILE_SIZE, DOOR_HEIGHT*SCALE)
+                    .setOffset(0, 2*TILE_SIZE - DOOR_HEIGHT*SCALE);
                 break;
-            case 'bush': {
+            case 'bush':
                 game.bushes.create(x, y, 'sprites', 'bush')
                     .setData('grounded', entity.grounded)
                     .setScale(SCALE)
                     .refreshBody()
-                    .body.setSize(TILE_SIZE/3, TILE_SIZE);
-            }break;
+                    .setSize(TILE_SIZE/3, TILE_SIZE);
+                break;
             case 'error':
                 scale(this.add.image(x, y, 'sprites', 'hudX'));
                 break;
