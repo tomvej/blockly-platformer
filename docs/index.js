@@ -209,6 +209,9 @@ function update() {
         game.player.anims.play('playerJump', true);
         game.state.groundType = null;
         game.state.onFloor = false;
+        if (game.player.body.onWall()) {
+            game.player.setVelocityY(0);
+        }
     }
 
     game.state.overlaps = game.state.overlaps.filter((overlap) => this.physics.overlap(overlap, game.player));
