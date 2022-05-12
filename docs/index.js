@@ -306,7 +306,6 @@ try {
 
 document.getElementById('start').addEventListener('click', () => {
     const code = Blockly.JavaScript.workspaceToCode(workspace);
-    console.log(code);
     try {
         clearEvents();
         eval(code);
