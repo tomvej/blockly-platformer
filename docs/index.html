@@ -9,17 +9,13 @@
 
     <script type="module" src="index.js"></script>
     <style>
-        .main {
+        .row, .col {
             display: flex;
-            flex-direction: column;
-            align-items: stretch;
+            justify-content: center;
             gap: 10px;
         }
-        .controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            justify-content: center;
+        .col {
+            flex-direction: column;
         }
         button {
             font-size: 14pt;
@@ -51,10 +47,10 @@
     </style>
 </head>
 <body>
-    <div class="main">
-        <div class="controls">
-            <textarea id="world-editor" cols="20" rows="16" wrap="hard"></textarea>
-            <div class="main">
+    <div class="col">
+        <div class="row">
+            <div class="col">
+                <textarea id="world-editor" cols="20" rows="16" wrap="hard"></textarea>
                 <button type="button" id="regenerate">Přegeneruj svět</button>
             </div>
             <table class="legend">
@@ -67,16 +63,16 @@
                 <tr><td>k</td><td>keř</td></tr>
                 <tr><td>c</td><td>kaktus</td></tr>
             </table>
-            <div class="main">
+            <div class="col">
                 <button type="button" id="clear">Vyčisti editor</button>
                 <button type="button" id="repair">Oprav editor</button>
             </div>
         </div>
-        <div class="controls">
+        <div class="row">
             <div id="game"></div>
             <div id="workspace"></div>
         </div>
-        <div class="controls">
+        <div class="row">
             <button type="button" id="start">Start</button>
             <button type="button" id="reset">Reset</button>
         </div>
