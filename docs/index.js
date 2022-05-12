@@ -218,8 +218,8 @@ function onCoin(player, coin) {
     const grounded = coin.getData('grounded');
     if (!grounded || player.body.onFloor()) {
         coin.disableBody(true, true);
+        game.events.onCoin();
     }
-    game.events.onCoin();
 }
 
 function onEdge(player, edge) {
