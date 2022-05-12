@@ -123,8 +123,7 @@ function create() {
     game.edges = this.physics.add.staticGroup();
     game.coins = this.physics.add.staticGroup();
     game.exits = this.physics.add.staticGroup();
-    game.bushes = this.physics.add.staticGroup();
-    game.cacti = this.physics.add.staticGroup();
+    game.markers = this.physics.add.staticGroup();
 
     const createEdge = (x, y, type) => {
         const edge = this.add.rectangle(x, y-TILE_SIZE, TILE_SIZE/3, TILE_SIZE);
@@ -164,15 +163,17 @@ function create() {
                     .setOffset(0, 2*TILE_SIZE - DOOR_HEIGHT*SCALE);
                 break;
             case 'bush':
-                game.bushes.create(x, y, 'sprites', 'bush')
+                game.markers.create(x, y, 'sprites', 'bush')
                     .setData('grounded', entity.grounded)
+                    .setData('type', 'bush')
                     .setScale(SCALE)
                     .refreshBody()
                     .setSize(TILE_SIZE/3, TILE_SIZE);
                 break;
             case 'cactus':
-                game.cacti.create(x, y, 'sprites', 'cactus')
+                game.markers.create(x, y, 'sprites', 'cactus')
                     .setData('grounded', entity.grounded)
+                    .setData('type', 'cactus')
                     .setScale(SCALE)
                     .refreshBody()
                     .setSize(TILE_SIZE/3, TILE_SIZE);
@@ -188,12 +189,12 @@ function create() {
     this.physics.add.overlap(game.player, game.coins, onCoin);
     this.physics.add.overlap(game.player, game.edges, onEdge);
     this.physics.add.overlap(game.player, game.exits, exit, null, this);
-    this.physics.add.overlap(game.player, game.bushes, onBush);
-    this.physics.add.overlap(game.player, game.cacti, onCactus);
+    this.physics.add.overlap(game.player, game.markers, onMarker);
 
     this.input.on('pointerdown', () => game.events.onClick());
 
     game.running = false;
+    game.state.overlaps = [];
     this.scene.pause();
 }
 
@@ -217,15 +218,8 @@ function update() {
         game.state.groundType = null;
         game.state.onFloor = false;
     }
-    if (game.state.edge && !this.physics.overlap(game.player, game.state.edge)) {
-        game.state.edge = null;
-    }
-    if (game.state.bush && !this.physics.overlap(game.player, game.state.bush)) {
-        game.state.bush = null;
-    }
-    if (game.state.cactus && !this.physics.overlap(game.player, game.state.cactus)) {
-        game.state.cactus = null;
-    }
+
+    game.state.overlaps = game.state.overlaps.filter((overlap) => this.physics.overlap(overlap, game.player));
 }
 
 function onCoin(player, coin) {
@@ -240,10 +234,12 @@ function onEdge(player, edge) {
     const type = edge.getData('type');
     const touching = player.body.touching;
 
-    if (player.body.onFloor() && game.state.edge !== edge && ((type === 'left' && touching.left) || (type === 'right' && touching.right))) {
-        game.events.onEdge();
+    if (!game.state.overlaps.includes(edge)) {
+        game.state.overlaps.push(edge);
+        if (player.body.onFloor() && ((type === 'left' && touching.left) || (type === 'right' && touching.right))) {
+            game.events.onEdge();
+        }
     }
-    game.state.edge = edge;
 }
 
 function exit(player, exit) {
@@ -256,23 +252,14 @@ function exit(player, exit) {
     }
 }
 
-function onBush(player, bush) {
-    const grounded = bush.getData('grounded');
-    if (!grounded || player.body.onFloor()) {
-        if (game.state.bush !== bush) {
-            game.events.onBush();
-        }
-        game.state.bush = bush;
-    }
-}
-
-function onCactus(player, cactus) {
-    const grounded = cactus.getData('grounded');
-    if (!grounded || player.body.onFloor()) {
-        if (game.state.cactus !== cactus) {
-            game.events.onCactus();
-        }
-        game.state.cactus = cactus;
+function onMarker(player, marker) {
+    const grounded = marker.getData('grounded');
+    if ((!grounded || player.body.onFloor()) && !game.state.overlaps.includes(marker)) {
+        game.state.overlaps.push(marker);
+        ({
+            bush: game.events.onBush,
+            cactus: game.events.onCactus,
+        })[marker.getData('type')]();
     }
 }
 
