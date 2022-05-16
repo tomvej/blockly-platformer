@@ -217,22 +217,25 @@ function onGround(player, ground) {
 function update() {
     if (game.player.body.onFloor()) {
         game.player.anims.play('playerWalk', true);
+
         if (!game.state.onFloor && !game.state.starting) {
             game.events.onLanding();
         }
+
         game.state.onFloor = true;
         game.state.starting = false;
     } else {
         game.player.anims.play('playerJump', true);
-        game.state.groundType = null;
-        game.state.onFloor = false;
+
         if (game.player.body.onWall()) {
             game.player.setVelocityY(0);
         }
-
-        if (!game.state.jumping) {
+        if (game.state.onFloor && !game.state.jumping) {
             game.player.setVelocityX(game.direction * TILE_SIZE * game.cf.fallX);
         }
+
+        game.state.groundType = null;
+        game.state.onFloor = false;
     }
 
     game.state.overlaps = game.state.overlaps.filter((overlap) => this.physics.overlap(overlap, game.player));
