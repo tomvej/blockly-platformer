@@ -1,5 +1,14 @@
 import {maxInstancesMap, toolbox} from './blocks.js';
-import {DOOR_HEIGHT, PLAYER_HEIGHT, SCALE, TILE_SIZE, WORLD_HEIGHT, WORLD_WIDTH} from './constants.js';
+import {
+    COEFFICIENTS,
+    DOOR_HEIGHT,
+    GRAVITY_COEFFICIENT,
+    PLAYER_HEIGHT,
+    SCALE,
+    TILE_SIZE,
+    WORLD_HEIGHT,
+    WORLD_WIDTH
+} from './constants.js';
 import {defaultWorld, fixWorldInput, parseWorld} from './world.js';
 import {setToOverwrite} from "./editorOverwrite.js";
 
@@ -22,15 +31,11 @@ setToOverwrite(worldEditor, fixWorldInput);
 const width = WORLD_WIDTH * TILE_SIZE;
 const height = WORLD_HEIGHT * TILE_SIZE;
 
-const CF = {
-    gravity: 10,
-    longJumpX: 4.6,
-    longJumpY: 4,
-    highJumpX: 1.2,
-    highJumpY: 8.5,
-    velocity: 4,
-    fallX: 2,
-}
+
+
+Object.entries(COEFFICIENTS).forEach(([key, value]) => {
+    document.querySelector(`#coefficients input[name='${key}']`).value = value;
+});
 
 const game = {
     get direction() {
@@ -47,7 +52,7 @@ const game = {
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: {y: CF.gravity * TILE_SIZE},
+                gravity: {y: GRAVITY_COEFFICIENT * TILE_SIZE},
                 debug: true,
             }
         },
@@ -74,10 +79,10 @@ game.control = {
         if (game.running && game.player.body.onFloor()) {
             switch (type) {
                 case 'LONG':
-                    game.player.setVelocity(game.direction * TILE_SIZE * CF.longJumpX, -TILE_SIZE * CF.longJumpY);
+                    game.player.setVelocity(game.direction * TILE_SIZE * game.cf.longJumpX, -TILE_SIZE * game.cf.longJumpY);
                     break;
                 case 'HIGH':
-                    game.player.setVelocity(game.direction * TILE_SIZE * CF.highJumpX, -TILE_SIZE * CF.highJumpY);
+                    game.player.setVelocity(game.direction * TILE_SIZE * game.cf.highJumpX, -TILE_SIZE * game.cf.highJumpY);
                     break;
             }
             game.state.jumping = true;
@@ -203,7 +208,7 @@ function create() {
 
 function onGround(player, ground) {
     if (game.player.body.onFloor()) {
-        game.player.setVelocityX(game.direction * CF.velocity * TILE_SIZE);
+        game.player.setVelocityX(game.direction * game.cf.velocity * TILE_SIZE);
         game.state.groundType = ground.getData('type');
         game.state.jumping = false;
     }
@@ -226,7 +231,7 @@ function update() {
         }
 
         if (!game.state.jumping) {
-            game.player.setVelocityX(game.direction * TILE_SIZE * CF.fallX);
+            game.player.setVelocityX(game.direction * TILE_SIZE * game.cf.fallX);
         }
     }
 
@@ -285,6 +290,10 @@ function clearEvents() {
     }
 }
 
+function generateCoefficients() {
+    game.cf = Object.fromEntries(Object.keys(COEFFICIENTS).map((key) => [key, document.querySelector(`#coefficients input[name='${key}']`).value]))
+}
+
 const workspace = Blockly.inject('workspace', {
     toolbox,
     maxInstances: maxInstancesMap,
@@ -306,6 +315,7 @@ document.getElementById('start').addEventListener('click', () => {
     const code = Blockly.JavaScript.workspaceToCode(workspace);
     try {
         clearEvents();
+        generateCoefficients();
         eval(code);
         game.running = true;
         game.game.scene.resume('default');

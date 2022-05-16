@@ -17,3 +17,13 @@ export const TILE_BUSH = 'k';
 export const TILE_CACTUS = 'c';
 
 export const GROUND_TILES = [TILE_GRASS, TILE_SAND, TILE_STONE];
+
+export const COEFFICIENTS = {
+    longJumpX: 4.6,
+    longJumpY: 4,
+    highJumpX: 1.2,
+    highJumpY: 8.5,
+    velocity: 4,
+    fallX: 0,
+}
+export const GRAVITY_COEFFICIENT = 10;
