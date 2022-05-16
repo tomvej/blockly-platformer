@@ -70,6 +70,7 @@ game.control = {
                     game.player.setVelocity(game.direction * TILE_SIZE * 1.2, -TILE_SIZE * 8.5);
                     break;
             }
+            game.state.jumping = true;
         }
     },
     turn() {
@@ -194,6 +195,7 @@ function onGround(player, ground) {
     if (game.player.body.onFloor()) {
         game.player.setVelocityX(game.direction * 4 * TILE_SIZE);
         game.state.groundType = ground.getData('type');
+        game.state.jumping = false;
     }
 }
 
@@ -211,6 +213,10 @@ function update() {
         game.state.onFloor = false;
         if (game.player.body.onWall()) {
             game.player.setVelocityY(0);
+        }
+
+        if (!game.state.jumping) {
+            game.player.setVelocityX(0);
         }
     }
 
