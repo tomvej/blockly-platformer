@@ -22,6 +22,16 @@ setToOverwrite(worldEditor, fixWorldInput);
 const width = WORLD_WIDTH * TILE_SIZE;
 const height = WORLD_HEIGHT * TILE_SIZE;
 
+const CF = {
+    gravity: 10,
+    longJumpX: 4.6,
+    longJumpY: 4,
+    highJumpX: 1.2,
+    highJumpY: 8.5,
+    velocity: 4,
+    fallX: 2,
+}
+
 const game = {
     get direction() {
         return game.player.flipX ? -1 : 1;
@@ -37,7 +47,7 @@ const game = {
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: {y: 10 * TILE_SIZE},
+                gravity: {y: CF.gravity * TILE_SIZE},
                 debug: true,
             }
         },
@@ -64,10 +74,10 @@ game.control = {
         if (game.running && game.player.body.onFloor()) {
             switch (type) {
                 case 'LONG':
-                    game.player.setVelocity(game.direction * TILE_SIZE * 4.6, -TILE_SIZE * 4);
+                    game.player.setVelocity(game.direction * TILE_SIZE * CF.longJumpX, -TILE_SIZE * CF.longJumpY);
                     break;
                 case 'HIGH':
-                    game.player.setVelocity(game.direction * TILE_SIZE * 1.2, -TILE_SIZE * 8.5);
+                    game.player.setVelocity(game.direction * TILE_SIZE * CF.highJumpX, -TILE_SIZE * CF.highJumpY);
                     break;
             }
             game.state.jumping = true;
@@ -193,7 +203,7 @@ function create() {
 
 function onGround(player, ground) {
     if (game.player.body.onFloor()) {
-        game.player.setVelocityX(game.direction * 4 * TILE_SIZE);
+        game.player.setVelocityX(game.direction * CF.velocity * TILE_SIZE);
         game.state.groundType = ground.getData('type');
         game.state.jumping = false;
     }
@@ -216,7 +226,7 @@ function update() {
         }
 
         if (!game.state.jumping) {
-            game.player.setVelocityX(0);
+            game.player.setVelocityX(game.direction * TILE_SIZE * CF.fallX);
         }
     }
 
