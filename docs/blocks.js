@@ -209,19 +209,19 @@ export const toolbox = {
             kind: 'block',
             type: 'conditions_ground',
             fields: {
-                KIND: 'grass',
+                TYPE: 'grass',
             }
         }, {
             kind: 'block',
             type: 'conditions_ground',
             fields: {
-                KIND: 'sand',
+                TYPE: 'sand',
             }
         }, {
             kind: 'block',
             type: 'conditions_ground',
             fields: {
-                KIND: 'stone',
+                TYPE: 'stone',
             }
         }],
     }],
