@@ -41,9 +41,7 @@ const game = {
     get direction() {
         return game.player.flipX ? -1 : 1;
     },
-    state: {
-        starting: true,
-    },
+    state: {},
     game: new Phaser.Game({
         type: Phaser.AUTO,
         parent: document.getElementById('game'),
@@ -202,6 +200,7 @@ function create() {
     this.input.on('pointerdown', () => game.events.onClick());
 
     game.running = false;
+    game.state.starting = true;
     game.state.overlaps = [];
     this.scene.pause();
 }
