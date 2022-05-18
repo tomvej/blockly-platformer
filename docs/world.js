@@ -128,6 +128,9 @@ export function parseWorld(worldString) {
 export function fixWorldInput(worldString) {
     console.group('World input');
     const rows = worldString.split('\n');
+    if (rows[rows.length - 1] === '') {
+        rows.pop();
+    }
     checkWorldSize(rows);
     const getTile = createGetTile(rows);
     printWorld(getTile);
