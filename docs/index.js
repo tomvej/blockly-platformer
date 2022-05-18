@@ -109,6 +109,9 @@ game.control = {
             game.hideAlert && game.scene.time.removeEvent(game.hideAlert);
             game.hideAlert = game.scene.time.delayedCall(1000, () => game.alert.setText(''));
         }
+    },
+    get collectedCoins() {
+        return game.coins.countActive(false);
     }
 }
 

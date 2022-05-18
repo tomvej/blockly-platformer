@@ -123,6 +123,17 @@ Blockly.JavaScript.conditions_ground = function(block) {
     return [`game.control.isOnGround('${groundType}')`, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 }
 
+Blockly.Blocks.conditions_coins = defineBlock({
+    message0: 'sebral jsem mincí alespoň %1',
+    args0: [{name: 'COUNT', type: 'input_value', check: 'Number'}],
+    output: 'Boolean',
+    colour: COLOUR_LOGIC,
+});
+Blockly.JavaScript.conditions_coins = function(block) {
+    const count = Blockly.JavaScript.valueToCode(block, 'COUNT', Blockly.JavaScript.ORDER_RELATIONAL) || 0;
+    return [`game.control.collectedCoins >= ${count}`,  Blockly.JavaScript.ORDER_RELATIONAL];
+}
+
 // REMOVE next statements from conditions
 const ifInit = Blockly.Blocks.controls_if.init;
 Blockly.Blocks.controls_if.init = function() {
@@ -222,6 +233,19 @@ export const toolbox = {
             type: 'conditions_ground',
             fields: {
                 TYPE: 'stone',
+            }
+        }, {
+            kind: 'block',
+            type: 'conditions_coins',
+            inputs: {
+                COUNT: {
+                    shadow: {
+                        type: 'math_number',
+                        fields: {
+                            NUM: 1,
+                        }
+                    }
+                }
             }
         }],
     }],
