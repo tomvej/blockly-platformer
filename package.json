@@ -7,10 +7,12 @@
   "author": "Tomáš Vejpustek <tom.vejpustek@centrum.cz>",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "web-dev-server -p 8080 -r docs -w"
   },
   "devDependencies": {
-    "@web/dev-server": "0.1.31"
+    "@web/dev-server": "0.1.31",
+    "selenium-webdriver": "4.1.2"
   }
 }
