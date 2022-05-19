@@ -75,16 +75,18 @@ export function parseWorld(worldString) {
                     [TILE_STONE]: 'stone',
                 }[tile(x, y)];
 
-                const left = GROUND_TILES.includes(tile(x-1,y));
-                const right = GROUND_TILES.includes(tile(x+1,y));
+                const leftConnection = GROUND_TILES.includes(tile(x-1,y));
+                const rightConnection = GROUND_TILES.includes(tile(x+1,y));
                 let connection = '';
-                if (left && right) {
+                if (leftConnection && rightConnection) {
                     connection = 'Mid';
-                } else if (left) {
+                } else if (leftConnection) {
                     connection = 'Right';
-                } else if (right) {
+                } else if (rightConnection) {
                     connection = 'Left';
                 }
+                const left = leftConnection || GROUND_TILES.includes(tile(x-1, y-1));
+                const right = rightConnection || GROUND_TILES.includes(tile(x+1,y-1));
                 entities.push({kind: 'platform', x, y, connection, left, right, type});
             } else if (TILE_COIN === tile(x,y)) {
                 const grounded = GROUND_TILES.includes(tile(x,y+1));
