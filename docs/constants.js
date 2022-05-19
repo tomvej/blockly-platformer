@@ -22,7 +22,7 @@ export const COEFFICIENTS = {
     longJumpX: 5.2,
     longJumpY: 3.8,
     highJumpX: 1.2,
-    highJumpY: 8.5,
+    highJumpY: 8.7,
     velocity: 4,
     fallX: 2,
 }
