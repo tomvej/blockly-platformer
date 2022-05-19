@@ -205,6 +205,9 @@ function create() {
     game.running = false;
     game.state.starting = true;
     game.state.overlaps = [];
+
+    document.getElementById('game').classList.remove('correct');
+
     this.scene.pause();
 }
 
@@ -270,6 +273,7 @@ function exit(player, exit) {
         const camera = this.cameras.main;
         camera.flash(350);
         camera.once('cameraflashcomplete', () => camera.flash(350));
+        document.getElementById('game').classList.add('correct');
     }
 }
 
