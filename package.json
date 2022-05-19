@@ -9,7 +9,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "web-dev-server -p 8080 -r docs -w"
+    "start": "web-dev-server -p 8080 -r docs -w",
+    "test": "node test.js"
   },
   "devDependencies": {
     "@web/dev-server": "0.1.31",
