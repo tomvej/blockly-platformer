@@ -35,6 +35,7 @@ const blocks = '{"blocks":{"languageVersion":0,"blocks":[{"type":"events_edge","
             const importBlocks = await driver.findElement(By.id('blockly-import'));
             const start = await driver.findElement(By.id('start'));
             const reset = await driver.findElement(By.id('reset'));
+            const game = await driver.findElement(By.id('game'));
 
             await worldEditor.clear();
             await worldEditor.sendKeys(world);
@@ -47,8 +48,10 @@ const blocks = '{"blocks":{"languageVersion":0,"blocks":[{"type":"events_edge","
             await reset.click();
             await start.click();
 
-            await sleep(15000);
-
+            await driver.wait(async () => {
+                const className = await game.getAttribute('class');
+                return className.includes('correct');
+            }, 10000);
 
         } finally {
             await driver.quit();
