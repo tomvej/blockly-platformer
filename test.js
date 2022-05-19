@@ -1,31 +1,15 @@
-import {Builder, By} from "selenium-webdriver";
+import {Builder, By} from 'selenium-webdriver';
+import {readdir} from 'fs/promises';
+import path from 'path';
 
 const sleep = async (time) => new Promise((resolve) => setTimeout(resolve, time));
 
-const world = `
-....................
-....................
-....................
-....................
-....................
-....................
-....................
-....................
-....................
-....................
-...........o........
-....===...===.......
-....................
-.a.k..............e.
-====================
-....................
-`.trim();
-
-const blocks = '{"blocks":{"languageVersion":0,"blocks":[{"type":"events_edge","id":"^^Vh|*kT70ukEPrp!EyG","x":57,"y":34,"next":{"block":{"type":"actions_jump","id":"MF|#Qy[p1(Vl+KM@t5L+","fields":{"TYPE":"LONG"}}}},{"type":"events_bush","id":"0^oJ:r@f/FUHYVW7rZ1k","x":206,"y":37,"next":{"block":{"type":"actions_jump","id":"{NGD}GK19%xZ5lZv^GZt","fields":{"TYPE":"HIGH"}}}}]}}';
-
 (async function test() {
     try {
+        const tests = await readdir('test');
+
         const driver = await new Builder().forBrowser('firefox').build();
+        const unsuccessful = [];
         try {
             await driver.get('http://localhost:8080');
 
@@ -37,21 +21,43 @@ const blocks = '{"blocks":{"languageVersion":0,"blocks":[{"type":"events_edge","
             const reset = await driver.findElement(By.id('reset'));
             const game = await driver.findElement(By.id('game'));
 
-            await worldEditor.clear();
-            await worldEditor.sendKeys(world);
-            await regenerateWorld.click();
+            for (let test of tests) {
+                try {
+                    const {world, solution} = await import(path.resolve('test', test));
 
-            await blocklyEditor.clear();
-            await blocklyEditor.sendKeys(blocks);
-            await importBlocks.click();
+                    console.log(`Testing ${test} ...`);
 
-            await reset.click();
-            await start.click();
+                    await worldEditor.clear();
+                    await worldEditor.sendKeys(world.trim());
+                    await regenerateWorld.click();
 
-            await driver.wait(async () => {
-                const className = await game.getAttribute('class');
-                return className.includes('correct');
-            }, 10000);
+                    await blocklyEditor.clear();
+                    await blocklyEditor.sendKeys(solution);
+                    await importBlocks.click();
+
+                    await reset.click();
+                    await start.click();
+
+                    await driver.wait(async () => {
+                        const className = await game.getAttribute('class');
+                        return className.includes('correct');
+                    }, 10000, 'Simulation would not succeed in 10 s.');
+
+                    console.log(`Test successful for ${test}.`);
+                } catch (e) {
+                    console.error(e);
+                    unsuccessful.push([test, e.message]);
+                }
+            }
+
+            if (unsuccessful.length) {
+                console.log('Test failed for:')
+                for (let failure of unsuccessful) {
+                    console.log(`\t${failure[0]}: ${failure[1]}`);
+                }
+            } else {
+                console.log('Test successful!');
+            }
 
         } finally {
             await driver.quit();
