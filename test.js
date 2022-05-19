@@ -41,7 +41,7 @@ const sleep = async (time) => new Promise((resolve) => setTimeout(resolve, time)
                     await driver.wait(async () => {
                         const className = await game.getAttribute('class');
                         return className.includes('correct');
-                    }, 10000, 'Simulation would not succeed in 10 s.');
+                    }, 30000, 'Simulation would not succeed in 30 s.');
 
                     console.log(`Test successful for ${test}.`);
                 } catch (e) {
