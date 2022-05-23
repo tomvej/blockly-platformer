@@ -98,8 +98,10 @@ game.control = {
     hasDirection(direction) {
         switch(direction) {
             case 'LEFT':
+            case 'left':
                 return game.player.flipX;
             case 'RIGHT':
+            case 'right':
                 return !game.player.flipX;
         }
     },
@@ -264,7 +266,7 @@ function onEdge(player, edge) {
 
     if (!game.state.overlaps.includes(edge) && game.player.body.onFloor()) {
         game.state.overlaps.push(edge);
-        if ((type === 'left' && touching.left) || (type === 'right' && touching.right)) {
+        if (game.control.hasDirection(type)) {
             game.events.onEdge();
         }
     }
