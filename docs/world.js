@@ -10,7 +10,7 @@ import {
     WORLD_WIDTH, TILE_CACTUS
 } from "./constants.js";
 
-export const defaultWorld = `${`${TILE_EMPTY.repeat(20)}\n`.repeat(15)}${TILE_GRASS.repeat(20)}`
+export const defaultWorld = `${TILE_EMPTY.repeat(20)}\n`.repeat(16).trim();
 
 function checkWorldSize(rows) {
     if (rows.length < WORLD_HEIGHT) {
