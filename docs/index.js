@@ -2,6 +2,7 @@ import {maxInstancesMap, toolbox} from './blocks.js';
 import {
     COEFFICIENTS,
     DOOR_HEIGHT,
+    EDGE_WIDTH,
     GRAVITY_COEFFICIENT,
     PLAYER_HEIGHT,
     SCALE,
@@ -146,7 +147,7 @@ function create() {
     game.markers = this.physics.add.staticGroup();
 
     const createEdge = (x, y, type) => {
-        const edge = this.add.rectangle(x, y-TILE_SIZE, TILE_SIZE/3, TILE_SIZE);
+        const edge = this.add.rectangle(x, y-TILE_SIZE, EDGE_WIDTH, TILE_SIZE);
         edge.setData('type', type);
         game.edges.add(edge);
     }
@@ -159,8 +160,8 @@ function create() {
         switch (entity.kind) {
             case 'platform':
                 scale(game.platforms.create(x, y, 'sprites', `${entity.type}${entity.connection}`)).setData('type', entity.type);
-                !entity.left && createEdge(x - TILE_SIZE / 2, y, 'left');
-                !entity.right && createEdge(x + TILE_SIZE / 2, y, 'right');
+                !entity.left && createEdge(x - TILE_SIZE / 2 + EDGE_WIDTH / 2, y, 'left');
+                !entity.right && createEdge(x + TILE_SIZE / 2 - EDGE_WIDTH / 2, y, 'right');
                 break;
             case 'coin':
                 game.coins.create(x, y, 'sprites', 'coinGold')

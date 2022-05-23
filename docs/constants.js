@@ -3,6 +3,8 @@ export const WORLD_HEIGHT = 16;
 export const TILE_SIZE = 32;
 export const SCALE = 0.25;
 
+export const EDGE_WIDTH = TILE_SIZE / 6;
+
 export const PLAYER_HEIGHT = 164;
 export const DOOR_HEIGHT = 208;
 
