@@ -261,9 +261,9 @@ function onEdge(player, edge) {
     const type = edge.getData('type');
     const touching = player.body.touching;
 
-    if (!game.state.overlaps.includes(edge)) {
+    if (!game.state.overlaps.includes(edge) && game.player.body.onFloor()) {
         game.state.overlaps.push(edge);
-        if (player.body.onFloor() && ((type === 'left' && touching.left) || (type === 'right' && touching.right))) {
+        if ((type === 'left' && touching.left) || (type === 'right' && touching.right)) {
             game.events.onEdge();
         }
     }
