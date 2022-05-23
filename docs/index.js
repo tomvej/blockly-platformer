@@ -12,6 +12,9 @@ import {
 import {defaultWorld, fixWorldInput, parseWorld} from './world.js';
 import {setToOverwrite} from "./editorOverwrite.js";
 
+const urlParams = new URLSearchParams(window.location.search);
+console.log(urlParams.get('debug'));
+
 const worldEditor = document.getElementById('world-editor');
 let world = localStorage.getItem('editorValue') ?? defaultWorld;
 worldEditor.value = world;
@@ -51,7 +54,7 @@ const game = {
             default: 'arcade',
             arcade: {
                 gravity: {y: GRAVITY_COEFFICIENT * TILE_SIZE},
-                debug: true,
+                debug: urlParams.get('debug') !== null,
             }
         },
         scene: {
