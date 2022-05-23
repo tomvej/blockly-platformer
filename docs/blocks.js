@@ -14,7 +14,6 @@ const COLOUR_LOGIC = Blockly.Msg.LOGIC_HUE;
 Blockly.Blocks.actions_turn = defineBlock({
     message0: 'otoč se',
     previousStatement: null,
-    nextStatement: null,
     colour: COLOUR_ACTIONS,
 });
 Blockly.JavaScript.actions_turn = function() {
