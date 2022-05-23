@@ -11,7 +11,7 @@ const sleep = async (time) => new Promise((resolve) => setTimeout(resolve, time)
         const driver = await new Builder().forBrowser('firefox').build();
         const unsuccessful = [];
         try {
-            await driver.get('http://localhost:8080');
+            await driver.get('http://localhost:8080?debug');
 
             const worldEditor = await driver.findElement(By.id('world-editor'));
             const regenerateWorld = await driver.findElement(By.id('regenerate'));
