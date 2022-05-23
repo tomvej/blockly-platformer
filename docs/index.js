@@ -261,12 +261,9 @@ function onCoin(player, coin) {
 }
 
 function onEdge(player, edge) {
-    const type = edge.getData('type');
-    const touching = player.body.touching;
-
     if (!game.state.overlaps.includes(edge) && game.player.body.onFloor()) {
         game.state.overlaps.push(edge);
-        if (game.control.hasDirection(type)) {
+        if (game.control.hasDirection(edge.getData('type'))) {
             game.events.onEdge();
         }
     }
