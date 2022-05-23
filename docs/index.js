@@ -200,9 +200,9 @@ function create() {
     game.player.setDepth(1);
     this.physics.add.collider(game.platforms, game.player, onGround);
     this.physics.add.overlap(game.player, game.coins, onCoin);
-    this.physics.add.overlap(game.player, game.edges, onEdge);
-    this.physics.add.overlap(game.player, game.exits, exit, null, this);
     this.physics.add.overlap(game.player, game.markers, onMarker);
+    this.physics.add.overlap(game.player, game.exits, exit, null, this);
+    this.physics.add.overlap(game.player, game.edges, onEdge);
 
     this.input.on('pointerdown', () => game.events.onClick());
 
