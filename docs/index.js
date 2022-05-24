@@ -348,3 +348,6 @@ document.getElementById('blockly-import').addEventListener('click', () => {
     const code = JSON.parse(blocklyEditor.value);
     Blockly.serialization.workspaces.load(code, workspace)
 });
+document.getElementById('blockly-clear').addEventListener('click', () => {
+    workspace.clear();
+});
