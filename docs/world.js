@@ -75,8 +75,8 @@ export function parseWorld(worldString) {
                     [TILE_STONE]: 'stone',
                 }[tile(x, y)];
 
-                const leftConnection = GROUND_TILES.includes(tile(x-1,y));
-                const rightConnection = GROUND_TILES.includes(tile(x+1,y));
+                const leftConnection = GROUND_TILES.includes(tile(x-1,y)) || x === 0;
+                const rightConnection = GROUND_TILES.includes(tile(x+1,y)) || x === WORLD_WIDTH - 1;
                 let connection = '';
                 if (leftConnection && rightConnection) {
                     connection = 'Mid';
