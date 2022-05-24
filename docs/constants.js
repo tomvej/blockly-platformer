@@ -26,6 +26,6 @@ export const COEFFICIENTS = {
     highJumpX: 1.2,
     highJumpY: 8.7,
     velocity: 4,
-    fallX: 2, //1.4--1.8
+    fallX: 1.6,
 }
 export const GRAVITY_COEFFICIENT = 10;
