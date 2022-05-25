@@ -129,6 +129,10 @@ game.control = {
     }
 }
 
+function getCharacterType() {
+    return document.querySelector('input[name="character"]:checked').value;
+}
+
 function create() {
     this.add.image(width / 2, height / 2, 'background').setDisplaySize(width, height);
     game.alert = this.add.text(16, 16, '', {fontSize: `${TILE_SIZE}px`, fill: '#FF0000'});
@@ -355,6 +359,11 @@ document.getElementById('start').addEventListener('click', () => {
 });
 document.getElementById('reset').addEventListener('click', () => {
     game.game.scene.start('default');
+});
+document.getElementById('character-choice').addEventListener('change', (event) => {
+    if (event.target.matches('input[name="character"]')) {
+        game.game.scene.start('default');
+    }
 });
 
 const blocklyEditor = document.getElementById('blockly-editor');

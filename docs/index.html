@@ -58,15 +58,48 @@
                 <button type="button" id="regenerate">Přegeneruj svět</button>
             </div>
             <table class="legend">
-                <tr><td>=</td><td>tráva</td><td>země</td></tr>
-                <tr><td>-</td><td>písek</td><td>země</td></tr>
-                <tr><td>#</td><td>kámen</td><td>země</td></tr>
-                <tr><td>a</td><td>hráč</td><td>výška 2</td></tr>
-                <tr><td>e</td><td>východ</td><td>výška 2</td></tr>
-                <tr><td>o</td><td>mince</td></tr>
-                <tr><td>k</td><td>keř</td></tr>
-                <tr><td>c</td><td>kaktus</td></tr>
-                <tr><td>x</td><td>bariéra</td><td>neprůchozí</td></tr>
+                <tr>
+                    <td>=</td>
+                    <td>tráva</td>
+                    <td>země</td>
+                </tr>
+                <tr>
+                    <td>-</td>
+                    <td>písek</td>
+                    <td>země</td>
+                </tr>
+                <tr>
+                    <td>#</td>
+                    <td>kámen</td>
+                    <td>země</td>
+                </tr>
+                <tr>
+                    <td>a</td>
+                    <td>hráč</td>
+                    <td>výška 2</td>
+                </tr>
+                <tr>
+                    <td>e</td>
+                    <td>východ</td>
+                    <td>výška 2</td>
+                </tr>
+                <tr>
+                    <td>o</td>
+                    <td>mince</td>
+                </tr>
+                <tr>
+                    <td>k</td>
+                    <td>keř</td>
+                </tr>
+                <tr>
+                    <td>c</td>
+                    <td>kaktus</td>
+                </tr>
+                <tr>
+                    <td>x</td>
+                    <td>bariéra</td>
+                    <td>neprůchozí</td>
+                </tr>
             </table>
             <div class="col">
                 <button type="button" id="clear">Vyčisti editor</button>
@@ -87,31 +120,37 @@
             <button type="button" id="start">Start</button>
             <button type="button" id="reset">Reset</button>
         </div>
-        <div class="col" id="coefficients">
-            <label>
-                <input type="number" name="velocity">
-                Rychlost pohybu na plošinkách
-            </label>
-            <label>
-                <input type="number" name="fallX">
-                Horizontální rychlost pádu
-            </label>
-            <label>
-                <input type="number" name="longJumpX">
-                Dlouhý skok, horizontální složka
-            </label>
-            <label>
-                <input type="number" name="longJumpY">
-                Dlouhý skok, vertikální složka
-            </label>
-            <label>
-                <input type="number" name="highJumpX">
-                Vysoký skok, horizontální složka
-            </label>
-            <label>
-                <input type="number" name="highJumpY">
-                Vysoký skok, vertikální složka
-            </label>
+        <div class="row">
+            <div class="col" id="coefficients">
+                <label>
+                    <input type="number" name="velocity">
+                    Rychlost pohybu na plošinkách
+                </label>
+                <label>
+                    <input type="number" name="fallX">
+                    Horizontální rychlost pádu
+                </label>
+                <label>
+                    <input type="number" name="longJumpX">
+                    Dlouhý skok, horizontální složka
+                </label>
+                <label>
+                    <input type="number" name="longJumpY">
+                    Dlouhý skok, vertikální složka
+                </label>
+                <label>
+                    <input type="number" name="highJumpX">
+                    Vysoký skok, horizontální složka
+                </label>
+                <label>
+                    <input type="number" name="highJumpY">
+                    Vysoký skok, vertikální složka
+                </label>
+            </div>
+            <div class="col" id="character-choice">
+                <label><input type="radio" name="character" value="alien" checked>Mimozemšťan</label>
+                <label><input type="radio" name="character" value="girl">Holka</label>
+            </div>
         </div>
     </div>
 </body>
