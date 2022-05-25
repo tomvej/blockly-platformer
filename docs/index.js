@@ -71,6 +71,7 @@ function preload() {
     this.load.image('background', 'images/blue_grass.png');
     this.load.atlasXML('sprites', 'images/spritesheet_complete.png', 'images/spritesheet_complete.xml');
     this.load.atlasXML('girl', 'images/character_femaleAdventurer_sheetHD.png', 'images/character_femaleAdventurer_sheetHD.xml');
+    this.load.spritesheet('alien', 'images/characters.png', {frameWidth: 148, frameHeight: 204});
 }
 
 const scale = (object) => object.setScale(SCALE).refreshBody();
@@ -169,6 +170,22 @@ function createCharacter(type, x, y) {
                 .setScale(SCALE)
                 .setSize(null, PLAYER_HEIGHT)
                 .setOffset(0, -2 * TILE_SIZE + PLAYER_HEIGHT);
+        case 'helmetles':
+            this.anims.create({
+                key: 'playerWalk',
+                frames: this.anims.generateFrameNumbers('alien', {start: 5, end: 6}),
+                frameRate: 15,
+                repeat: -1,
+            });
+            this.anims.create({
+                key: 'playerJump',
+                frames: [{key: 'alien', frame: 2}],
+                frameRate: 15,
+            });
+            return this.physics.add.sprite(x, y+6, 'alien')
+                .setScale(SCALE)
+                .setSize(TILE_SIZE/SCALE, PLAYER_HEIGHT)
+                .setOffset(10, 42)
     }
 }
 
