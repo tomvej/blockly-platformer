@@ -135,6 +135,8 @@ function getCharacterType() {
 }
 
 function createCharacter(type, x, y) {
+    this.anims.remove('playerWalk');
+    this.anims.remove('playerJump');
     switch (type) {
         case 'girl':
             this.anims.create({
