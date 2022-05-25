@@ -117,7 +117,13 @@ game.control = {
     },
     get collectedCoins() {
         return game.coins.countActive(false);
-    }
+    },
+    setGhost(value) {
+        if (game.running) {
+            game.state.ghost = value;
+            game.player.setAlpha(value ? 0.5 : 1);
+        }
+    },
 }
 
 function create() {
@@ -204,8 +210,8 @@ function create() {
 
     game.player.setDepth(1);
     this.physics.add.collider(game.platforms, game.player, onGround);
-    this.physics.add.collider(game.barriers, game.player);
-    this.physics.add.overlap(game.player, game.coins, onCoin);
+    this.physics.add.collider(game.barriers, game.player, onGround, isTangible);
+    this.physics.add.overlap(game.player, game.coins, onCoin, isTangible);
     this.physics.add.overlap(game.player, game.markers, onMarker);
     this.physics.add.overlap(game.player, game.exits, exit, null, this);
     this.physics.add.overlap(game.player, game.edges, onEdge);
@@ -219,6 +225,10 @@ function create() {
     document.getElementById('game').classList.remove('correct');
 
     this.scene.pause();
+}
+
+function isTangible() {
+    return !game.state.ghost;
 }
 
 function onGround(player, ground) {

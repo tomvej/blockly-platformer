@@ -145,6 +145,20 @@ Blockly.Blocks.controls_ifelse. init = function () {
     this.setNextStatement(false);
 }
 
+Blockly.Blocks.state_ghost = defineBlock({
+    message0: '%1 duchem',
+    args0: [{name: 'SWITCH', type: 'field_dropdown', options: [['stan se', 'on'], ['přestaň být', 'off']]}],
+    previousStatement: null,
+    colour: COLOUR_ACTIONS,
+});
+Blockly.JavaScript.state_ghost = function(block) {
+    const value = {
+        on: true,
+        off: false,
+    }[block.getFieldValue('SWITCH')];
+    return `game.control.setGhost(${value});\n`
+}
+
 export const toolbox = {
     contents: [{
         kind: 'category',
@@ -164,6 +178,18 @@ export const toolbox = {
             type: 'actions_jump',
             fields: {
                 TYPE: 'LONG',
+            },
+        }, {
+            kind: 'block',
+            type: 'state_ghost',
+            fields: {
+                SWITCH: 'on',
+            },
+        }, {
+            kind: 'block',
+            type: 'state_ghost',
+            fields: {
+                SWITCH: 'off',
             },
         }, {
             kind: 'block',
