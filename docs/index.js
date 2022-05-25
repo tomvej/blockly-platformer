@@ -137,6 +137,7 @@ function getCharacterType() {
 function createCharacter(type, x, y) {
     this.anims.remove('playerWalk');
     this.anims.remove('playerJump');
+    this.anims.remove('playerHit');
     switch (type) {
         case 'girl':
             this.anims.create({
@@ -148,6 +149,11 @@ function createCharacter(type, x, y) {
             this.anims.create({
                 key: 'playerJump',
                 frames: [{key: 'girl', frame: 'jump'}],
+                frameRate: 15,
+            });
+            this.anims.create({
+                key: 'playerHit',
+                frames: [{key: 'girl', frame: 'hit'}],
                 frameRate: 15,
             });
             return this.physics.add.sprite(x, y + 7, 'girl', 'idle')
@@ -166,6 +172,10 @@ function createCharacter(type, x, y) {
                 frames: [{key: 'sprites', frame: 'alienGreen_jump'}],
                 frameRate: 15,
             });
+            this.anims.create({
+                key: 'playerHit',
+                frames: [{key: 'sprites', frame: 'alienGreen_hit'}],
+            });
             return this.physics.add.sprite(x, y, 'sprites', 'alienGreen_front')
                 .setScale(SCALE)
                 .setSize(null, PLAYER_HEIGHT)
@@ -181,6 +191,10 @@ function createCharacter(type, x, y) {
                 key: 'playerJump',
                 frames: [{key: 'alien', frame: 2}],
                 frameRate: 15,
+            });
+            this.anims.create({
+                key: 'playerHit',
+                frames: [{key: 'alien', frame: 4}],
             });
             return this.physics.add.sprite(x, y+6, 'alien')
                 .setScale(SCALE)
@@ -367,6 +381,7 @@ function onHazard(player) {
     this.physics.pause();
     game.running = false;
     player.setTint(0xff5555);
+    player.anims.play('playerHit', true);
 }
 
 function clearEvents() {
