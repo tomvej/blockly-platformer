@@ -4,7 +4,6 @@ import {
     DOOR_HEIGHT,
     EDGE_WIDTH,
     GRAVITY_COEFFICIENT,
-    PLAYER_HEIGHT,
     SCALE,
     TILE_SIZE,
     WORLD_HEIGHT,
@@ -72,6 +71,7 @@ const game = {
 function preload() {
     this.load.image('background', 'images/blue_grass.png');
     this.load.atlasXML('sprites', 'images/spritesheet_complete.png', 'images/spritesheet_complete.xml');
+    this.load.atlasXML('player', 'images/character_femaleAdventurer_sheetHD.png', 'images/character_femaleAdventurer_sheetHD.xml');
 }
 
 const scale = (object) => object.setScale(SCALE).refreshBody();
@@ -127,13 +127,13 @@ function create() {
 
     this.anims.create({
         key: 'playerWalk',
-        frames: this.anims.generateFrameNames('sprites', {prefix: 'alienGreen_walk', start: 1, end: 2}),
+        frames: this.anims.generateFrameNames('player', {prefix: 'walk', start: 0, end: 7}),
         frameRate: 15,
         repeat: -1,
     });
     this.anims.create({
         key: 'playerJump',
-        frames: [{key: 'sprites', frame: 'alienGreen_jump'}],
+        frames: [{key: 'player', frame: 'jump'}],
         frameRate: 15,
     });
     this.anims.create({
@@ -173,10 +173,10 @@ function create() {
                     .setSize(TILE_SIZE/3, TILE_SIZE);
                 break;
             case 'player':
-                game.player = this.physics.add.sprite(x, y2, 'sprites', 'alienGreen_front')
-                    .setScale(SCALE)
-                    .setSize(null, PLAYER_HEIGHT)
-                    .setOffset(0, -2*TILE_SIZE + PLAYER_HEIGHT)
+                game.player = this.physics.add.sprite(x, y2+7, 'player', 'idle')
+                    .setScale(0.19)
+                    .setSize(164, 200)
+                    .setOffset(14, 56)
                 break;
             case 'exit':
                 game.exits.create(x, y2, 'sprites', 'doorClosed')
