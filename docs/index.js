@@ -4,6 +4,7 @@ import {
     DOOR_HEIGHT,
     EDGE_WIDTH,
     GRAVITY_COEFFICIENT,
+    PLAYER_HEIGHT,
     SCALE,
     TILE_SIZE,
     WORLD_HEIGHT,
@@ -147,10 +148,26 @@ function createCharacter(type, x, y) {
                 frames: [{key: 'girl', frame: 'jump'}],
                 frameRate: 15,
             });
-            return this.physics.add.sprite(x, y+7, 'girl', 'idle')
+            return this.physics.add.sprite(x, y + 7, 'girl', 'idle')
                 .setScale(0.19)
                 .setSize(164, 200)
                 .setOffset(14, 56);
+        case 'alien':
+            this.anims.create({
+                key: 'playerWalk',
+                frames: this.anims.generateFrameNames('sprites', {prefix: 'alienGreen_walk', start: 1, end: 2}),
+                frameRate: 15,
+                repeat: -1,
+            });
+            this.anims.create({
+                key: 'playerJump',
+                frames: [{key: 'sprites', frame: 'alienGreen_jump'}],
+                frameRate: 15,
+            });
+            return this.physics.add.sprite(x, y, 'sprites', 'alienGreen_front')
+                .setScale(SCALE)
+                .setSize(null, PLAYER_HEIGHT)
+                .setOffset(0, -2 * TILE_SIZE + PLAYER_HEIGHT);
     }
 }
 
@@ -196,7 +213,7 @@ function create() {
                     .setSize(TILE_SIZE/3, TILE_SIZE);
                 break;
             case 'player':
-                game.player = createCharacter.call(this, 'girl', x, y2);
+                game.player = createCharacter.call(this, getCharacterType(), x, y2);
                 break;
             case 'exit':
                 game.exits.create(x, y2, 'sprites', 'doorClosed')
