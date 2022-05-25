@@ -204,7 +204,7 @@ function create() {
     game.coins = this.physics.add.staticGroup();
     game.exits = this.physics.add.staticGroup();
     game.markers = this.physics.add.staticGroup();
-    game.barriers = this.physics.add.staticGroup();
+    game.hazard = this.physics.add.staticGroup();
 
     const createEdge = (x, y, type) => {
         const edge = this.add.rectangle(x, y-TILE_SIZE, EDGE_WIDTH, TILE_SIZE);
@@ -249,7 +249,11 @@ function create() {
                     .setSize(TILE_SIZE/3, TILE_SIZE);
                 break;
             case 'barrier':
-                game.barriers.create(x, y, 'sprites', 'brickBrown').setScale(SCALE).refreshBody();
+                game.hazard.create(x, y, 'sprites', 'spikes')
+                    .setScale(SCALE)
+                    .refreshBody()
+                    .setSize(TILE_SIZE, TILE_SIZE/2)
+                    .setOffset(0, TILE_SIZE/2);
                 break;
             case 'error':
                 scale(this.add.image(x, y, 'sprites', 'hudX'));
@@ -259,10 +263,10 @@ function create() {
 
     game.player.setDepth(1);
     this.physics.add.collider(game.platforms, game.player, onGround);
-    this.physics.add.collider(game.barriers, game.player, onGround, isTangible);
+    this.physics.add.collider(game.player, game.hazard, onHazard, isTangible, this);
     this.physics.add.overlap(game.player, game.coins, onCoin, isTangible);
     this.physics.add.overlap(game.player, game.markers, onMarker);
-    this.physics.add.overlap(game.player, game.exits, exit, null, this);
+    this.physics.add.overlap(game.player, game.exits, exit, isTangible, this);
     this.physics.add.overlap(game.player, game.edges, onEdge);
 
     this.input.on('pointerdown', () => game.events.onClick());
@@ -292,30 +296,32 @@ function onGround(player, ground) {
 }
 
 function update() {
-    if (game.player.body.onFloor()) {
-        game.player.anims.play('playerWalk', true);
+    if (game.running) {
+        if (game.player.body.onFloor()) {
+            game.player.anims.play('playerWalk', true);
 
-        if (!game.state.onFloor && !game.state.starting) {
-            game.events.onLanding();
+            if (!game.state.onFloor && !game.state.starting) {
+                game.events.onLanding();
+            }
+
+            game.state.onFloor = true;
+            game.state.starting = false;
+        } else {
+            game.player.anims.play('playerJump', true);
+
+            if (game.player.body.onWall()) {
+                game.player.setVelocityY(0);
+            }
+            if (game.state.onFloor && !game.state.jumping) {
+                game.player.setVelocityX(game.direction * TILE_SIZE * game.cf.fallX);
+            }
+
+            game.state.groundType = null;
+            game.state.onFloor = false;
         }
 
-        game.state.onFloor = true;
-        game.state.starting = false;
-    } else {
-        game.player.anims.play('playerJump', true);
-
-        if (game.player.body.onWall()) {
-            game.player.setVelocityY(0);
-        }
-        if (game.state.onFloor && !game.state.jumping) {
-            game.player.setVelocityX(game.direction * TILE_SIZE * game.cf.fallX);
-        }
-
-        game.state.groundType = null;
-        game.state.onFloor = false;
+        game.state.overlaps = game.state.overlaps.filter((overlap) => this.physics.overlap(overlap, game.player));
     }
-
-    game.state.overlaps = game.state.overlaps.filter((overlap) => this.physics.overlap(overlap, game.player));
 }
 
 function onCoin(player, coin) {
@@ -355,6 +361,12 @@ function onMarker(player, marker) {
             cactus: game.events.onCactus,
         })[marker.getData('type')]();
     }
+}
+
+function onHazard(player) {
+    this.physics.pause();
+    game.running = false;
+    player.setTint(0xff5555);
 }
 
 function clearEvents() {
