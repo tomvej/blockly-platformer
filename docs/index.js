@@ -13,7 +13,6 @@ import {defaultWorld, fixWorldInput, parseWorld} from './world.js';
 import {setToOverwrite} from "./editorOverwrite.js";
 
 const urlParams = new URLSearchParams(window.location.search);
-console.log(urlParams.get('debug'));
 
 const worldEditor = document.getElementById('world-editor');
 let world = localStorage.getItem('editorValue') ?? defaultWorld;
