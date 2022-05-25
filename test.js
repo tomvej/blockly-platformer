@@ -6,12 +6,13 @@ const sleep = async (time) => new Promise((resolve) => setTimeout(resolve, time)
 
 (async function test() {
     try {
+        const debug = !process.argv.includes('nodebug');
         const tests = await readdir('test');
 
         const driver = await new Builder().forBrowser('firefox').build();
         const unsuccessful = [];
         try {
-            await driver.get('http://localhost:8080?debug');
+            await driver.get(debug ? 'http://localhost:8080?debug' : 'http://localhost:8080');
 
             const worldEditor = await driver.findElement(By.id('world-editor'));
             const regenerateWorld = await driver.findElement(By.id('regenerate'));
