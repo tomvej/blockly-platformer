@@ -1,13 +1,16 @@
 import {
-    GROUND_TILES,
+    GROUND_TILES, TILE_BARRIER,
     TILE_BUSH,
+    TILE_CACTUS,
     TILE_COIN,
     TILE_EMPTY,
     TILE_EXIT,
     TILE_GRASS,
-    TILE_PLAYER, TILE_STONE, TILE_SAND,
+    TILE_PLAYER,
+    TILE_SAND,
+    TILE_STONE,
     WORLD_HEIGHT,
-    WORLD_WIDTH, TILE_CACTUS
+    WORLD_WIDTH
 } from "./constants.js";
 
 export const defaultWorld = `${TILE_EMPTY.repeat(20)}\n`.repeat(16).trim();
@@ -115,6 +118,8 @@ export function parseWorld(worldString) {
             } else if (TILE_CACTUS === tile(x, y)) {
                 const grounded = GROUND_TILES.includes(tile(x,y+1));
                 entities.push({kind: 'marker', type: 'cactus', x, y, grounded});
+            } else if (TILE_BARRIER === tile(x, y)) {
+                entities.push({kind: 'barrier', x, y});
             }
         }
     }

@@ -146,6 +146,7 @@ function create() {
     game.coins = this.physics.add.staticGroup();
     game.exits = this.physics.add.staticGroup();
     game.markers = this.physics.add.staticGroup();
+    game.barriers = this.physics.add.staticGroup();
 
     const createEdge = (x, y, type) => {
         const edge = this.add.rectangle(x, y-TILE_SIZE, EDGE_WIDTH, TILE_SIZE);
@@ -192,6 +193,9 @@ function create() {
                     .refreshBody()
                     .setSize(TILE_SIZE/3, TILE_SIZE);
                 break;
+            case 'barrier':
+                game.barriers.create(x, y, 'sprites', 'brickBrown').setScale(SCALE).refreshBody();
+                break;
             case 'error':
                 scale(this.add.image(x, y, 'sprites', 'hudX'));
                 break;
@@ -200,6 +204,7 @@ function create() {
 
     game.player.setDepth(1);
     this.physics.add.collider(game.platforms, game.player, onGround);
+    this.physics.add.collider(game.barriers, game.player);
     this.physics.add.overlap(game.player, game.coins, onCoin);
     this.physics.add.overlap(game.player, game.markers, onMarker);
     this.physics.add.overlap(game.player, game.exits, exit, null, this);
