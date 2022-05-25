@@ -70,7 +70,7 @@ const game = {
 function preload() {
     this.load.image('background', 'images/blue_grass.png');
     this.load.atlasXML('sprites', 'images/spritesheet_complete.png', 'images/spritesheet_complete.xml');
-    this.load.atlasXML('player', 'images/character_femaleAdventurer_sheetHD.png', 'images/character_femaleAdventurer_sheetHD.xml');
+    this.load.atlasXML('girl', 'images/character_femaleAdventurer_sheetHD.png', 'images/character_femaleAdventurer_sheetHD.xml');
 }
 
 const scale = (object) => object.setScale(SCALE).refreshBody();
@@ -133,21 +133,31 @@ function getCharacterType() {
     return document.querySelector('input[name="character"]:checked').value;
 }
 
+function createCharacter(type, x, y) {
+    switch (type) {
+        case 'girl':
+            this.anims.create({
+                key: 'playerWalk',
+                frames: this.anims.generateFrameNames('girl', {prefix: 'walk', start: 0, end: 7}),
+                frameRate: 15,
+                repeat: -1,
+            });
+            this.anims.create({
+                key: 'playerJump',
+                frames: [{key: 'girl', frame: 'jump'}],
+                frameRate: 15,
+            });
+            return this.physics.add.sprite(x, y+7, 'girl', 'idle')
+                .setScale(0.19)
+                .setSize(164, 200)
+                .setOffset(14, 56);
+    }
+}
+
 function create() {
     this.add.image(width / 2, height / 2, 'background').setDisplaySize(width, height);
     game.alert = this.add.text(16, 16, '', {fontSize: `${TILE_SIZE}px`, fill: '#FF0000'});
 
-    this.anims.create({
-        key: 'playerWalk',
-        frames: this.anims.generateFrameNames('player', {prefix: 'walk', start: 0, end: 7}),
-        frameRate: 15,
-        repeat: -1,
-    });
-    this.anims.create({
-        key: 'playerJump',
-        frames: [{key: 'player', frame: 'jump'}],
-        frameRate: 15,
-    });
     this.anims.create({
         key: 'door-open',
         frames: [{key: 'sprites', frame: 'doorOpen'}],
@@ -186,10 +196,7 @@ function create() {
                     .setSize(TILE_SIZE/3, TILE_SIZE);
                 break;
             case 'player':
-                game.player = this.physics.add.sprite(x, y2+7, 'player', 'idle')
-                    .setScale(0.19)
-                    .setSize(164, 200)
-                    .setOffset(14, 56)
+                game.player = createCharacter.call(this, 'girl', x, y2);
                 break;
             case 'exit':
                 game.exits.create(x, y2, 'sprites', 'doorClosed')
