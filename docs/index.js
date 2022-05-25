@@ -124,6 +124,9 @@ game.control = {
             game.player.setAlpha(value ? 0.5 : 1);
         }
     },
+    get isGhost() {
+        return game.state.ghost;
+    }
 }
 
 function create() {
@@ -342,6 +345,7 @@ document.getElementById('start').addEventListener('click', () => {
     try {
         clearEvents();
         generateCoefficients();
+        console.log(code);
         eval(code);
         game.running = true;
         game.game.scene.resume('default');

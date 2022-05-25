@@ -145,6 +145,15 @@ Blockly.Blocks.controls_ifelse. init = function () {
     this.setNextStatement(false);
 }
 
+const getState = (value) => {
+    switch (value) {
+        case 'on':
+            return true;
+        case 'off':
+            return false;
+    }
+}
+
 Blockly.Blocks.state_ghost = defineBlock({
     message0: '%1 duchem',
     args0: [{name: 'SWITCH', type: 'field_dropdown', options: [['stan se', 'on'], ['přestaň být', 'off']]}],
@@ -152,11 +161,19 @@ Blockly.Blocks.state_ghost = defineBlock({
     colour: COLOUR_ACTIONS,
 });
 Blockly.JavaScript.state_ghost = function(block) {
-    const value = {
-        on: true,
-        off: false,
-    }[block.getFieldValue('SWITCH')];
-    return `game.control.setGhost(${value});\n`
+    const value = block.getFieldValue('SWITCH');
+    return `game.control.setGhost(${getState(value)});\n`
+}
+
+Blockly.Blocks.conditions_ghost = defineBlock({
+    message0: '%1 duch',
+    args0: [{name: 'SWITCH', type: 'field_dropdown', options: [['jsem', 'on'], ['nejsem', 'off']]}],
+    output: 'Boolean',
+    colour: COLOUR_LOGIC,
+});
+Blockly.JavaScript.conditions_ghost = function(block) {
+    const value = block.getFieldValue('SWITCH');
+    return [`game.control.isGhost === ${getState(value)}`, Blockly.JavaScript.ORDER_EQUALITY];
 }
 
 export const toolbox = {
@@ -232,33 +249,9 @@ export const toolbox = {
         }, {
             kind: 'block',
             type: 'conditions_direction',
-            fields: {
-                DIRECTION: 'RIGHT'
-            }
-        }, {
-            kind: 'block',
-            type: 'conditions_direction',
-            fields: {
-                DIRECTION: 'LEFT'
-            }
         }, {
             kind: 'block',
             type: 'conditions_ground',
-            fields: {
-                TYPE: 'grass',
-            }
-        }, {
-            kind: 'block',
-            type: 'conditions_ground',
-            fields: {
-                TYPE: 'sand',
-            }
-        }, {
-            kind: 'block',
-            type: 'conditions_ground',
-            fields: {
-                TYPE: 'stone',
-            }
         }, {
             kind: 'block',
             type: 'conditions_coins',
@@ -272,6 +265,9 @@ export const toolbox = {
                     }
                 }
             }
+        }, {
+            kind: 'block',
+            type: 'conditions_ghost',
         }],
     }],
 }
