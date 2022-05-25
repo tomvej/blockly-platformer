@@ -44,7 +44,6 @@ const game = {
     get direction() {
         return game.player.flipX ? -1 : 1;
     },
-    state: {},
     game: new Phaser.Game({
         type: Phaser.AUTO,
         parent: document.getElementById('game'),
@@ -255,6 +254,7 @@ function create() {
     game.state = {
         starting: true,
         overlaps: [],
+        ghost: false,
     };
 
     document.getElementById('game').classList.remove('correct');
