@@ -250,8 +250,10 @@ function create() {
     this.input.on('pointerdown', () => game.events.onClick());
 
     game.running = false;
-    game.state.starting = true;
-    game.state.overlaps = [];
+    game.state = {
+        starting: true,
+        overlaps: [],
+    };
 
     document.getElementById('game').classList.remove('correct');
 
