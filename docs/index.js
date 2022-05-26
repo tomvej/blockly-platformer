@@ -382,6 +382,7 @@ function onMarker(player, marker) {
         ({
             bush: game.events.onBush,
             cactus: game.events.onCactus,
+            mushroomRed: game.events.onMushroom,
         })[marker.getData('type')]();
     }
 }
@@ -401,6 +402,7 @@ function clearEvents() {
         onLanding: () => {},
         onClick: () => {},
         onCactus: () => {},
+        onMushroom: () => {},
     }
 }
 

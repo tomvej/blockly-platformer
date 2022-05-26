@@ -92,6 +92,14 @@ Blockly.Blocks.events_landing = defineBlock({
 maxInstancesMap.events_landing = 1;
 Blockly.JavaScript.events_landing = createEventGenerator('onLanding');
 
+Blockly.Blocks.events_mushroom = defineBlock({
+    message0: 'houba',
+    nextStatement: null,
+    colour: COLOUR_EVENTS,
+})
+maxInstancesMap.events_mushroom = 1;
+Blockly.JavaScript.events_mushroom = createEventGenerator('onMushroom');
+
 Blockly.Blocks.events_click = defineBlock({
     message0: 'kliknutí',
     nextStatement: null,
@@ -234,6 +242,9 @@ export const toolbox = {
         }, {
             kind: 'block',
             type: 'events_click',
+        }, {
+            kind: 'block',
+            type: 'events_mushroom',
         }],
     }, {
         kind: 'category',
