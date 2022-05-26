@@ -156,7 +156,7 @@ function createCharacter(type, x, y) {
                 frames: [{key: 'girl', frame: 'hit'}],
                 frameRate: 15,
             });
-            return this.physics.add.sprite(x, y + 7, 'girl', 'idle')
+            return this.physics.add.sprite(x, y + 7, 'girl', 'side')
                 .setScale(0.19)
                 .setSize(164, 200)
                 .setOffset(14, 56);
@@ -176,7 +176,7 @@ function createCharacter(type, x, y) {
                 key: 'playerHit',
                 frames: [{key: 'sprites', frame: 'alienGreen_hit'}],
             });
-            return this.physics.add.sprite(x, y, 'sprites', 'alienGreen_front')
+            return this.physics.add.sprite(x, y, 'sprites', 'alienGreen_stand')
                 .setScale(SCALE)
                 .setSize(null, PLAYER_HEIGHT)
                 .setOffset(0, -2 * TILE_SIZE + PLAYER_HEIGHT);
@@ -196,7 +196,7 @@ function createCharacter(type, x, y) {
                 key: 'playerHit',
                 frames: [{key: 'alien', frame: 4}],
             });
-            return this.physics.add.sprite(x, y+6, 'alien')
+            return this.physics.add.sprite(x, y+6, 'alien', 1)
                 .setScale(SCALE)
                 .setSize(TILE_SIZE/SCALE, PLAYER_HEIGHT)
                 .setOffset(10, 42)
