@@ -19,6 +19,7 @@ export const TILE_BUSH = 'k';
 export const TILE_CACTUS = 'c';
 export const TILE_SPIKES_UP = 'x';
 export const TILE_SPIKES_DOWN = 'v';
+export const TILE_MUSHROOM = 'h';
 
 export const GROUND_TILES = [TILE_GRASS, TILE_SAND, TILE_STONE];
 

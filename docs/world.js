@@ -11,7 +11,7 @@ import {
     TILE_SAND,
     TILE_STONE,
     WORLD_HEIGHT,
-    WORLD_WIDTH, TILE_SPIKES_DOWN
+    WORLD_WIDTH, TILE_SPIKES_DOWN, TILE_MUSHROOM
 } from "./constants.js";
 
 export const defaultWorld = `${TILE_EMPTY.repeat(20)}\n`.repeat(16).trim();
@@ -117,8 +117,11 @@ export function parseWorld(worldString) {
                 const grounded = GROUND_TILES.includes(tile(x,y+1));
                 entities.push({kind: 'marker', type: 'bush', x, y, grounded});
             } else if (TILE_CACTUS === tile(x, y)) {
-                const grounded = GROUND_TILES.includes(tile(x,y+1));
+                const grounded = GROUND_TILES.includes(tile(x, y + 1));
                 entities.push({kind: 'marker', type: 'cactus', x, y, grounded});
+            } else if (TILE_MUSHROOM === tile(x, y)) {
+                const grounded = GROUND_TILES.includes(tile(x, y + 1));
+                entities.push({kind: 'marker', type: 'mushroomRed', x, y, grounded});
             } else if (TILE_SPIKES_UP === tile(x, y)) {
                 entities.push({kind: 'spikes', x, y, direction: 'up'});
             } else if (TILE_SPIKES_DOWN === tile(x, y)) {
