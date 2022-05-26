@@ -66,7 +66,7 @@ export function setToOverwrite(editor, parseData = (x) => x) {
     });
     editor.addEventListener('copy', (event) => {
         event.preventDefault();
-        event.clipboardData.setData('text/plain', editor.value);
+        event.clipboardData.setData('text/plain', editor.value.replace(/\n/g, '|'));
     });
     editor.addEventListener('paste', (event) => {
         event.preventDefault();

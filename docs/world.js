@@ -140,7 +140,7 @@ export function parseWorld(worldString) {
 
 export function fixWorldInput(worldString) {
     console.group('World input');
-    const rows = worldString.split('\n');
+    const rows = worldString.split(/[|\n]/);
     if (rows[rows.length - 1] === '') {
         rows.pop();
     }
