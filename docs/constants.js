@@ -17,7 +17,8 @@ export const TILE_EXIT = 'e';
 export const TILE_PLAYER = 'a';
 export const TILE_BUSH = 'k';
 export const TILE_CACTUS = 'c';
-export const TILE_BARRIER = 'x';
+export const TILE_SPIKES_UP = 'x';
+export const TILE_SPIKES_DOWN = 'v';
 
 export const GROUND_TILES = [TILE_GRASS, TILE_SAND, TILE_STONE];
 

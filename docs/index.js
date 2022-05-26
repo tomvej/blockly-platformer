@@ -262,13 +262,22 @@ function create() {
                     .refreshBody()
                     .setSize(TILE_SIZE/3, TILE_SIZE);
                 break;
-            case 'barrier':
-                game.hazard.create(x, y, 'sprites', 'spikes')
+            case 'spikes': {
+                const spikes = game.hazard.create(x, y, 'sprites', 'spikes')
                     .setScale(SCALE)
                     .refreshBody()
-                    .setSize(TILE_SIZE, TILE_SIZE/2)
-                    .setOffset(0, TILE_SIZE/2);
-                break;
+                    .setSize(TILE_SIZE, TILE_SIZE / 2);
+                switch (entity.direction) {
+                    case 'up':
+                        spikes.setOffset(0, TILE_SIZE / 2);
+                        break;
+                    case 'down':
+                        spikes
+                            .setFlipY(true)
+                            .setOffset(0, 0);
+                        break;
+                }
+                } break;
             case 'error':
                 scale(this.add.image(x, y, 'sprites', 'hudX'));
                 break;
