@@ -184,6 +184,44 @@ Blockly.JavaScript.conditions_ghost = function(block) {
     return [`game.control.isGhost === ${getState(value)}`, Blockly.JavaScript.ORDER_EQUALITY];
 }
 
+Blockly.Blocks.controls_custom_if = defineBlock({
+    message0: '%{BKY_CONTROLS_IF_MSG_IF} %1',
+    args0: [{name: 'IF0', type: 'input_value', check: 'Boolean'}],
+    message1: '%1',
+    args1: [{name: 'DO0', type: 'input_statement'}],
+    previousStatement: null,
+    colour: COLOUR_LOGIC,
+});
+Blockly.Blocks.controls_custom_ifelse = defineBlock({
+    message0: '%{BKY_CONTROLS_IF_MSG_IF} %1',
+    args0: [{name: 'IF0', type: 'input_value', check: 'Boolean'}],
+    message1: '%1',
+    args1: [{name: 'DO0', type: 'input_statement'}],
+    message2: '%{BKY_CONTROLS_IF_MSG_ELSE}',
+    message3: '%1',
+    args3: [{name: 'ELSE', type: 'input_statement'}],
+    previousStatement: null,
+    colour: COLOUR_LOGIC,
+})
+Blockly.Blocks.controls_custom_ifelseifelse = defineBlock({
+    message0: '%{BKY_CONTROLS_IF_MSG_IF} %1',
+    args0: [{name: 'IF0', type: 'input_value', check: 'Boolean'}],
+    message1: '%1',
+    args1: [{name: 'DO0', type: 'input_statement'}],
+    message2: '%{BKY_CONTROLS_IF_MSG_ELSEIF} %1',
+    args2: [{name: 'IF1', type: 'input_value', check: 'Boolean'}],
+    message3: '%1',
+    args3: [{name: 'DO1', type: 'input_statement'}],
+    message4: '%{BKY_CONTROLS_IF_MSG_ELSE}',
+    message5: '%1',
+    args5: [{name: 'ELSE', type: 'input_statement'}],
+    previousStatement: null,
+    colour: COLOUR_LOGIC,
+});
+Blockly.JavaScript.controls_custom_if = Blockly.JavaScript.controls_if;
+Blockly.JavaScript.controls_custom_ifelse = Blockly.JavaScript.controls_if;
+Blockly.JavaScript.controls_custom_ifelseifelse = Blockly.JavaScript.controls_if;
+
 export const toolbox = {
     contents: [{
         kind: 'category',
@@ -252,13 +290,6 @@ export const toolbox = {
         colour: COLOUR_LOGIC,
         contents: [{
             kind: 'block',
-            type: 'controls_if',
-        }, {
-            kind: 'block',
-            type: 'controls_if',
-            extraState: {hasElse: true},
-        }, {
-            kind: 'block',
             type: 'conditions_direction',
         }, {
             kind: 'block',
@@ -280,5 +311,22 @@ export const toolbox = {
             kind: 'block',
             type: 'conditions_ghost',
         }],
+    }, {
+        kind: 'category',
+        name: 'Větvení',
+        colour: COLOUR_LOGIC,
+        contents: [{
+            kind: 'block',
+            type: 'controls_if',
+        }, {
+            kind: 'block',
+            type: 'controls_custom_if',
+        }, {
+            kind: 'block',
+            type: 'controls_custom_ifelse',
+        }, {
+            kind: 'block',
+            type: 'controls_custom_ifelseifelse',
+        }]
     }],
 }
