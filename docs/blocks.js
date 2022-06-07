@@ -131,14 +131,16 @@ Blockly.JavaScript.conditions_ground = function(block) {
 }
 
 Blockly.Blocks.conditions_coins = defineBlock({
-    message0: 'sebral jsem mincí alespoň %1',
-    args0: [{name: 'COUNT', type: 'input_value', check: 'Number'}],
+    message0: 'počet mincí %1 %2',
+    args0: [
+        {name: 'OP', type: 'field_dropdown', options: [['>', '>'], ['<', '<'], ['≤', '<='], ['≥', '>='], ['=', '==='], ['≠', '!==']]},
+        {name: 'VALUE', type: 'field_dropdown', options: [['0', '0'], ['1', '1'], ['2', '2'], ['3', '3'], ['4', '4']]},
+    ],
     output: 'Boolean',
     colour: COLOUR_LOGIC,
 });
-Blockly.JavaScript.conditions_coins = function(block) {
-    const count = Blockly.JavaScript.valueToCode(block, 'COUNT', Blockly.JavaScript.ORDER_RELATIONAL) || 0;
-    return [`game.control.collectedCoins >= ${count}`,  Blockly.JavaScript.ORDER_RELATIONAL];
+Blockly.JavaScript.conditions_coins = function (block) {
+    return [`game.control.collectedCoins ${block.getFieldValue('OP')} ${block.getFieldValue('VALUE')}`, Blockly.JavaScript.ORDER_RELATIONAL];
 }
 
 // REMOVE next statements from conditions
@@ -297,15 +299,9 @@ export const toolbox = {
         }, {
             kind: 'block',
             type: 'conditions_coins',
-            inputs: {
-                COUNT: {
-                    shadow: {
-                        type: 'math_number',
-                        fields: {
-                            NUM: 1,
-                        }
-                    }
-                }
+            fields: {
+                OP: '>=',
+                VALUE: '1',
             }
         }, {
             kind: 'block',
