@@ -17,4 +17,4 @@ export const world = `
 ....................
 `;
 
-export const solution = '{"blocks":{"languageVersion":0,"blocks":[{"type":"events_edge","id":"^^Vh|*kT70ukEPrp!EyG","x":57,"y":34,"next":{"block":{"type":"actions_jump","id":"MF|#Qy[p1(Vl+KM@t5L+","fields":{"TYPE":"LONG"}}}},{"type":"events_bush","id":"0^oJ:r@f/FUHYVW7rZ1k","x":206,"y":37,"next":{"block":{"type":"actions_jump","id":"{NGD}GK19%xZ5lZv^GZt","fields":{"TYPE":"HIGH"}}}}]}}';
+export const solution = '{"blocks":{"languageVersion":0,"blocks":[{"type":"events_edge","id":"^^Vh|*kT70ukEPrp!EyG","x":57,"y":34,"next":{"block":{"type":"actions_jump","id":"MF|#Qy[p1(Vl+KM@t5L+","fields":{"TYPE":"long"}}}},{"type":"events_bush","id":"0^oJ:r@f/FUHYVW7rZ1k","x":206,"y":37,"next":{"block":{"type":"actions_jump","id":"{NGD}GK19%xZ5lZv^GZt","fields":{"TYPE":"high"}}}}]}}';

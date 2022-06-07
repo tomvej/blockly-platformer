@@ -22,7 +22,7 @@ Blockly.JavaScript.actions_turn = function() {
 
 Blockly.Blocks.actions_jump = defineBlock({
     message0: 'skoč %1',
-    args0: [{name: 'TYPE', type: 'field_dropdown', options: [['vysoko', 'HIGH'], ['daleko', 'LONG']]}],
+    args0: [{name: 'TYPE', type: 'field_dropdown', options: [['vysoko', 'high'], ['daleko', 'long']]}],
     previousStatement: null,
     colour: COLOUR_ACTIONS,
 });
@@ -234,13 +234,13 @@ export const toolbox = {
             kind: 'block',
             type: 'actions_jump',
             fields: {
-                TYPE: 'HIGH',
+                TYPE: 'high',
             },
         }, {
             kind: 'block',
             type: 'actions_jump',
             fields: {
-                TYPE: 'LONG',
+                TYPE: 'long',
             },
         }, {
             kind: 'block',

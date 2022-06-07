@@ -80,10 +80,10 @@ game.control = {
     jump(type) {
         if (game.running && game.player.body.onFloor()) {
             switch (type) {
-                case 'LONG':
+                case 'long':
                     game.player.setVelocity(game.direction * TILE_SIZE * game.cf.longJumpX, -TILE_SIZE * game.cf.longJumpY);
                     break;
-                case 'HIGH':
+                case 'high':
                     game.player.setVelocity(game.direction * TILE_SIZE * game.cf.highJumpX, -TILE_SIZE * game.cf.highJumpY);
                     break;
             }

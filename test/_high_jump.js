@@ -18,4 +18,4 @@ a.k..k..............
 
 `;
 
-export const solution = '{"blocks":{"languageVersion":0,"blocks":[{"type":"events_bush","id":"t:M5rFu[uk:e4Hrn1C:H","x":1,"y":12,"next":{"block":{"type":"actions_jump","id":"-@EA--S`8RK)EOQmdHsi","fields":{"TYPE":"HIGH"}}}},{"type":"events_edge","id":"D4s/.`Si)MMrg4nn1+OY","x":140,"y":11,"next":{"block":{"type":"actions_jump","id":"EbC+hpZ*w[h0j1xsATX9","fields":{"TYPE":"HIGH"}}}},{"type":"events_cactus","id":"a,jRh%IgdUHDQ;r$w{19","x":293,"y":14,"next":{"block":{"type":"actions_turn","id":"oIg|cVfDRhL*zpfEh,6s"}}}]}}';
+export const solution = '{"blocks":{"languageVersion":0,"blocks":[{"type":"events_bush","id":"t:M5rFu[uk:e4Hrn1C:H","x":1,"y":12,"next":{"block":{"type":"actions_jump","id":"-@EA--S`8RK)EOQmdHsi","fields":{"TYPE":"high"}}}},{"type":"events_edge","id":"D4s/.`Si)MMrg4nn1+OY","x":140,"y":11,"next":{"block":{"type":"actions_jump","id":"EbC+hpZ*w[h0j1xsATX9","fields":{"TYPE":"high"}}}},{"type":"events_cactus","id":"a,jRh%IgdUHDQ;r$w{19","x":293,"y":14,"next":{"block":{"type":"actions_turn","id":"oIg|cVfDRhL*zpfEh,6s"}}}]}}';
