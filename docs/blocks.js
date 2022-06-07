@@ -110,7 +110,7 @@ Blockly.JavaScript.events_click = createEventGenerator('onClick');
 
 Blockly.Blocks.conditions_direction = defineBlock({
     message0: 'jdu %1',
-    args0: [{name: 'DIRECTION', type: 'field_dropdown', options: [['doleva', 'LEFT'], ['doprava', 'RIGHT']]}],
+    args0: [{name: 'DIRECTION', type: 'field_dropdown', options: [['doleva', 'left'], ['doprava', 'right']]}],
     output: 'Boolean',
     colour: COLOUR_LOGIC,
 });

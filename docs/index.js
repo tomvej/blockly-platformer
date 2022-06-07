@@ -97,10 +97,8 @@ game.control = {
     },
     hasDirection(direction) {
         switch(direction) {
-            case 'LEFT':
             case 'left':
                 return game.player.flipX;
-            case 'RIGHT':
             case 'right':
                 return !game.player.flipX;
         }
